@@ -100,12 +100,39 @@ public class BookController {
         return getPageWithCategory(model, pageNumber, id);
     }
 
+    /*
     @GetMapping("/detail/{id}")
     public String handelDetailPage(Model model, @PathVariable("id") Long id){
         //handel for product
 
         //props: book, book same category
         Book findBook = bookService.getBookById(id);
+        if (findBook == null){
+            return "error";
+        }
+
+        //Find book same category to handel
+        List<Book> filterList = bookService.getListBookByCategory(findBook.getCategory().getId(), findBook.getId());
+
+        //Handel limit of same book is 4 book
+        if (filterList.size() > 4)
+            filterList = filterList.subList(0, 4);
+
+        model.addAttribute("book", findBook);
+        model.addAttribute("listBookSame", filterList);
+
+        return "book/detail";
+    }
+     */
+
+    @GetMapping("/{title}")
+    public String handelDetailPage(Model model, @PathVariable String title){
+        //handel for product
+
+        //props: book, book same category
+        //Book findBook = bookService.getBookById(id);
+        Book findBook = bookService.getBookByTitle(title);
+
         if (findBook == null){
             return "error";
         }

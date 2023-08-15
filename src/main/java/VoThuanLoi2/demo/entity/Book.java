@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @Entity
 @Table(name="book")
@@ -66,4 +69,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private Set<Comment> comments = new HashSet<>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private Set<Favorite> favorites = new HashSet<>();
 }

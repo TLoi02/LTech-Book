@@ -34,7 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/css/**","/js/**","/images/**","/register","/error",
+                        .requestMatchers("/css/**","/font-awesome-4.7.0/**","/js/**","/images/**","/register","/error",
                                 "/home",
                                 "/book/**",
                                 "/blog/**",
@@ -53,7 +53,6 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/home")
                         .failureUrl("/error")
                         .permitAll())
-
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/home")

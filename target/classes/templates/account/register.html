@@ -16,6 +16,14 @@
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form th:action="@{/register}" th:object="${user}" method="post">
+                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                            <a class="btn btn-primary" href="/oauth2/authorization/google" style="margin-right: 20px;">Đăng nhập bằng Google</a>
+                            <a class="btn btn-primary" href="/oauth2/authorization/github" style="background-color: #1F883D;">Đăng nhập bằng Github</a>
+                        </div>
+
+                        <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center fw-bold mx-3 mb-0">Hoặc</p>
+                        </div>
                         <!--Username input -->
                         <div class="form-outline mb-4">
                             <label class="form-label" for="username">Tên đăng nhập</label>

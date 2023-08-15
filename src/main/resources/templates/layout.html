@@ -9,10 +9,12 @@
     <link rel="icon" th:href="@{/images/logo.png}" type="image/png">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/swiper-bundle.min.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/login-style.css}">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<header th:fragment="header">
+    <header th:fragment="header">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/home">
@@ -57,23 +59,70 @@
         </nav>
     </div>
 </header>
-<div th:insert="~{::${content}}">
+    <div th:insert="~{::${content}}">
 
 </div>
-<footer class="py-3 my-4" th:fragment="footer">
-    <div class="container">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="/home" class="nav-link px-2 text-muted">Trang chủ</a></li>
-            <li class="nav-item"><a href="/blog/list" class="nav-link px-2 text-muted">Tin tức</a></li>
-            <li class="nav-item"><a href="/tuyendung" class="nav-link px-2 text-muted">Tuyển dụng</a></li>
-        </ul>
-        <p class="text-center text-muted">© 2023 Coding by VoThuanLoi</p>
-    </div>
-    <script th:src="@{/js/jquery-3.3.1.slim.min}"></script>
-    <script th:src="@{/js/popper.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/swiper-bundle.min.js}"></script>
-    <script th:src="@{/js/main.js}"></script>
-</footer>
+    <footer th:fragment="footer">
+        <div class="container">
+            <div class="row" style="padding: 20px 0;">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer__info">
+                        <div class="footer__info__title">
+                            Contact info
+                        </div>
+                        <div class="footer__info__item">
+                            448 Phan Huy Ich, Go Vap, HCM
+                        </div>
+                        <div class="footer__info__item">
+                            Monday – Friday: 9:00-20:00
+                            <br>
+                            Saturday: 11:00 – 15:00
+                        </div>
+                        <div class="footer__info__item" style="font-weight: 450;">
+                            Vothuanloi110802@gmail.com
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer__info footer__about">
+                        <div class="footer__info__title">
+                            About Us
+                        </div>
+                        <div class="footer__info__item" style="font-size: 14px; margin-bottom: -10px;">
+                            Got Questions ? Call us 24/7!
+                        </div>
+                        <div class="footer__info__item" style="font-size: 30px; font-weight: 600; color: #CF3424;">
+                            0879-345-387
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer__info">
+                        <div class="footer__info__title">
+                            Pages
+                        </div>
+                        <div class="footer__info__item">
+                            <a href="#">Product</a>
+                        </div>
+                        <div class="footer__info__item">
+                            <a href="#">Blog</a>
+                        </div>
+                        <div class="footer__info__item">
+                            <a href="#">Career</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <span>Coding by </span>
+            <span class="footer__copyright__link">
+                    <a href="#">Vo Thuan Loi</a>
+                </span>
+        </div>
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/swiper-bundle.min.js}"></script>
+        <script th:src="@{/js/main.js}"></script>
+    </footer>
 </body>
 </html>

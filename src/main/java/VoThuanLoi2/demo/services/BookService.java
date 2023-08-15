@@ -57,6 +57,10 @@ public class BookService {
         return repo.findById(bookId).orElse(null);
     }
 
+    public Book getBookByTitle(String title){
+        return repo.findByTitle(title);
+    }
+
     public List<Book> getListBookByCategory(Long categoryId, Long idBookDetai){
         //filter if have book same category set limit is 4
         List<Book> filter = repo.findByCategoryId(categoryId);

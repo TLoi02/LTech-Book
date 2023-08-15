@@ -1,166 +1,394 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Trang chủ</title>
   <th:block th:replace="layout :: link-css"></th:block>
 </head>
 <body>
-  <th:block th:replace="layout :: header"></th:block>
-  <div class="container content">
-    <!--Silder-->
-    <div class="row slider">
-      <div class="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <div class="swiper-slide" th:each="blog1:${listSlide}">
-            <div class="row">
-              <div class="col-lg-6 col-md-6 col-sm-12">
-                <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Image blog" class="slider_img">
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="slider__content">
-                  <h3 class="slider__content__title" th:text = "${blog1.title}"></h3>
-                  <a class="btn btn-success" th:href="@{/blog/detail/{id}(id=${blog1.id})}">Tìm hiểu ngay</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
-    </div>
-    <!--Option Direct-->
-    <div class="row g-4">
-      <div class="col-lg-6 col-md-6 col-sm-12 option__wrap">
-        <img src="https://www.toponseek.com/blogs/wp-content/uploads/2022/06/viet-blog-3.jpg" alt="image_option" class="option__img">
-        <div class="option__content">
-          <div class="option__content__title">
-            <h1>Tin Tức</h1>
-          </div>
-          <a href="/blog/list" class="btn btn-success">Đọc tin tức</a>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 option__wrap">
-        <img src="https://media.istockphoto.com/id/1222563369/photo/bookstore-shop-exterior-with-books-and-textbooks-in-showcase.jpg?s=612x612&w=0&k=20&c=nvfvNWLiP6LKfhfTUVYppVRmzlpH8-ujIxk5jOtDcCE=" alt="image_option" class="option__img">
-        <div class="option__content">
-          <div class="option__content__title">
-            <h1>Cửa hàng</h1>
-          </div>
-          <a href="/book/list" class="btn btn-success">Mua sắm</a>
-        </div>
-      </div>
-    </div>
-    <!--Category-->
-    <div class="row">
-      <div class="category__title">
-        <h4>Thể loại sách tiêu biểu</h4>
-      </div>
-      <!--Category item-->
-      <div class="col-lg-3 col-md-6 col-sm-12 category__wrap" th:each="category:${listCategory}">
-        <div class="category__content">
-          <img src="https://i.pinimg.com/736x/3f/27/2f/3f272fe79ac302d58f401d25b74e37e8.jpg" alt="image_category" class="category__content__img">
-          <a th:text = "${category.name}"
-             th:href="@{/book/list/category/{id}(id=${category.id})}"
-             class="btn btn-outline-success" style="margin-top: 10px;">
-          </a>
-        </div>
-      </div>
-
-    </div>
-    <!--New product-->
-    <div class="row">
-      <div class="category__title">
-        <h4>Sách vừa cập nhật</h4>
-      </div>
-      <!--Slider-->
-      <div class="swiper best-seller" style="background: none;">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <!-- Slides -->
-          <div class="swiper-slide">
-            <div class="row">
-              <!--Product content-->
-              <!--Product content item-->
-              <div class="col-lg-3 col-md-6 col-sm-12 product__content" th:each="book:${listBookFirst}">
-                <div class="card product__item">
-                  <a class="product__itemt-link" th:href="@{/book/detail/{id}(id=${book.id})}">
-                    <img th:src="@{${book.image}}"
-                         class="card-img-top" alt="Book_image"
-                         style="height: 300px; object-fit: cover;"
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title book_title" th:text = "${book.title}"></h5>
-                      <p class="card-text card__product-desc" th:text = "${book.intro}">
-                      </p>
+    <th:block th:replace="layout :: header"></th:block>
+    <div layout:fragment="content">
+      <div class="home__slider">
+        <div class="container">
+          <div class="swiper swiper__product-category">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="home__slider__text">
+                      <div class="home__slider__text__title">
+                        Sale sach cong nghe thong tin
+                      </div>
+                      <div class="home__slider__text__btn">
+                        <a href="#">
+                          Detail
+                        </a>
+                      </div>
                     </div>
-                  </a>
-                  <h5 class="price" th:text = "${book.price}"></h5>
-                  <a aria-disabled="true" class="btn btn-secondary" th:if="${book.quantity == 0}" >Hết hàng</a>
-                  <a th:if="${book.quantity != 0}" class="btn btn-outline-primary" th:href="@{/cart/add/{id}(id=${book.id})}">Thêm vào giỏ hàng</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide" th:if="${typeBook == 'have'}">
-            <div class="row" >
-              <!--Product content-->
-              <!--Product content item-->
-              <div class="col-lg-3 col-md-6 col-sm-12 product__content" th:each="book:${listBookSecond}">
-                <div class="card product__item">
-                  <a class="product__itemt-link" th:href="@{/book/detail/{id}(id=${book.id})}">
-                    <img th:src="@{${book.image}}"
-                         class="card-img-top" alt="Book_image"
-                         style="height: 300px; object-fit: cover;"
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title book_title" th:text = "${book.title}"></h5>
-                      <p class="card-text card__product-desc" th:text = "${book.intro}">
-                      </p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="home__slider__img">
+                      <img src="https://demo2.pavothemes.com/bookory/wp-content/uploads/2022/02/revslider_book-4.png"
+                           alt="slider-image">
                     </div>
-                  </a>
-                  <h5 class="price" th:text = "${book.price}"></h5>
-                  <a aria-disabled="true" class="btn btn-secondary" th:if="${book.quantity == 0}" >Hết hàng</a>
-                  <a th:if="${book.quantity != 0}" class="btn btn-outline-primary" th:href="@{/cart/add/{id}(id=${book.id})}">Thêm vào giỏ hàng</a>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="home__slider__text">
+                      <div class="home__slider__text__title">
+                        Sale sach cong nghe thong tin
+                      </div>
+                      <div class="home__slider__text__btn">
+                        <a href="#">
+                          Detail
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="home__slider__img">
+                      <img src="https://demo2.pavothemes.com/bookory/wp-content/uploads/2022/02/revslider_book-4.png"
+                           alt="slider-image">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-pagination" style="color: red;"></div>
+            <div class="swiper-button-prev" style="margin-left: -12px; color: #CF3424;"></div>
+            <div class="swiper-button-next" style="margin-right: -12px; color: #CF3424;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row" style="margin: 20px 0;">
+          <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="home__best-seller">
+              <div class="home__best-seller__title">
+                Best Seller
+              </div>
+              <div class="home__best-seller__content">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="home__new__content__item home__best-seller__content__item">
+                      <div class="home__new__content__item__img">
+                        <a href="#">
+                          <img src="https://bizweb.dktcdn.net/100/180/408/products/chien-tranh-tien-te-1-c0c72970-7152-44f1-b27f-10e698f2acff.jpg?v=1667607754867"
+                               alt="book-image">
+                        </a>
+                      </div>
+                      <div class="home__new__content__item__text">
+                        <div class="home__new__content__item__text__title">
+                          <a href="#">Dac Nhan Tam</a>
+                        </div>
+                        <div class="home__new__content__item__text__author">
+                          <span>Vo Thuan Loi</span>
+                        </div>
+                        <div class="home__new__content__item__text__price">
+                          <div class="home__new__content__item__text__price__main">
+                            <i class="fa fa-usd" aria-hidden="true"></i>
+                            <span>20.000</span>
+                          </div>
+                          <div class="home__new__content__item__text__price__sale">
+                            <i class="fa fa-usd" aria-hidden="true"></i>
+                            <span>30.000</span>
+                          </div>
+                        </div>
+                        <div class="home__new__content__item__text__btn">
+                          <a href="#">
+                            Add to cart
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="home__new">
+              <div class="home__new__title">
+                New Book
+              </div>
+              <div class="home__new__content">
+                <div class="home__new__content__item">
+                  <div class="home__new__content__item__img">
+                    <a href="#">
+                      <img src="https://bizweb.dktcdn.net/100/180/408/products/chien-tranh-tien-te-1-c0c72970-7152-44f1-b27f-10e698f2acff.jpg?v=1667607754867"
+                           alt="book-image">
+                    </a>
+                  </div>
+                  <div class="home__new__content__item__text">
+                    <div class="home__new__content__item__text__title">
+                      <a href="#">Dac Nhan Tam</a>
+                    </div>
+                    <div class="home__new__content__item__text__author">
+                      <span>Vo Thuan Loi</span>
+                    </div>
+                    <div class="home__new__content__item__text__price">
+                      <div class="home__new__content__item__text__price__main">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span>20.000</span>
+                      </div>
+                      <div class="home__new__content__item__text__price__sale">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span>30.000</span>
+                      </div>
+                    </div>
+                    <div class="home__new__content__item__text__btn">
+                      <a href="#">
+                        Add to cart
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="home__new__content__item">
+                  <div class="home__new__content__item__img">
+                    <a href="#">
+                      <img src="https://bizweb.dktcdn.net/100/180/408/products/chien-tranh-tien-te-1-c0c72970-7152-44f1-b27f-10e698f2acff.jpg?v=1667607754867"
+                           alt="book-image">
+                    </a>
+                  </div>
+                  <div class="home__new__content__item__text">
+                    <div class="home__new__content__item__text__title">
+                      <a href="#">Dac Nhan Tam</a>
+                    </div>
+                    <div class="home__new__content__item__text__author">
+                      <span>Vo Thuan Loi</span>
+                    </div>
+                    <div class="home__new__content__item__text__price">
+                      <div class="home__new__content__item__text__price__main">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span>20.000</span>
+                      </div>
+                      <div class="home__new__content__item__text__price__sale">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span>30.000</span>
+                      </div>
+                    </div>
+                    <div class="home__new__content__item__text__btn">
+                      <a href="#">
+                        Add to cart
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
-    </div>
-    <!--New blog-->
-    <div class="row">
-      <div class="category__title">
-        <h4>Bài đăng gần đây</h4>
-      </div>
-      <div class="row g-4">
-        <!--Blog item-->
-        <div class="col-lg-3 col-md-6 col-sm-12" th:each="blog2:${listLasted}">
-          <div class="card product__item">
-            <img th:src="@{${blog2.image}}"
-                    class="card-img-top"
-                 style="height: 300px; object-fit: cover;"
-                 alt="Blog_image" />
-            <div class="card-body">
-              <h5 class="card-title book_title" th:text = "${blog2.title}"></h5>
-              <p class="card-text blog__desc" th:text = "${blog2.intro}">
-              </p>
+        <div class="row">
+          <div class="home__category">
+            <div class="home__category__text">
+              <div class="home__category__text__title">
+                Genres Books
+              </div>
+              <div class="home__category__text__btn">
+                <a href="#">
+                  View all
+                </a>
+              </div>
             </div>
-            <a class="btn btn-outline-primary" th:href="@{/blog/detail/{id}(id=${blog2.id})}">Đọc thêm</a>
+            <div class="home__category__content">
+              <div class="row">
+                <div class="product__category" style="border: none; padding: 0; margin-top: -10px;">
+                  <div class="product__category__content">
+                    <div class="swiper swiper__product-category">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                              <a href="#" style="text-decoration: none;">
+                                <div class="product__category__item">
+                                  <div class="product__category__item__img">
+                                    <img src="https://pixlok.com/wp-content/uploads/2021/12/Technology-Icon-0oikef.png"
+                                         alt="category-image">
+                                  </div>
+                                  <div class="product__category__item__name">
+                                    Technoloy
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                              <a href="#" style="text-decoration: none;">
+                                <div class="product__category__item">
+                                  <div class="product__category__item__img">
+                                    <img src="https://pixlok.com/wp-content/uploads/2021/12/Technology-Icon-0oikef.png"
+                                         alt="category-image">
+                                  </div>
+                                  <div class="product__category__item__name">
+                                    Technoloy
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="swiper-button-prev" style="margin-left: -12px;"></div>
+                      <div class="swiper-button-next" style="margin-right: -12px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="row">
+          <div class="product__sale">
+            <div class="product__sale__title">
+              Hot Deals
+            </div>
+            <div class="product__sale__content">
+              <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                  <div class="product__sale__content__item">
+                    <div class="product__sale__content__item__img">
+                      <a href="#">
+                        <img src="https://bizweb.dktcdn.net/100/283/734/products/dac-nhan-tam.png?v=1536810083057" alt="product-image">
+                      </a>
+                    </div>
+                    <div class="product__sale__content__item__title">
+                      <a href="#">Dac Nhan Tam</a>
+                      <span>25%</span>
+                    </div>
+                    <div class="product__sale__content__item__author">
+                      <span>Vo Thuan Loi</span>
+                    </div>
+                    <div class="product__sale__content__item__price">
+                      <div class="product__sale__content__item__price__main">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span>20.000</span>
+                      </div>
+                      <div class="product__sale__content__item__price__sale">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span>30.000</span>
+                      </div>
+                    </div>
+                    <div class="product__sale__content__item__btn">
+                      <a href="#">Add to cart</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="home__subcribe">
+            <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="home__subcribe__text">
+                  <div class="home__subcribe__text__title">
+                    Join the community
+                  </div>
+                  <div class="home__subcribe__text__desc">
+                    Enter your email address to receive regular updates, as well as news on upcoming events and specific offers.
+                  </div>
+                  <form action="">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subcribe</button>
+                  </form>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="home__subcribe__img">
+                  <img src="https://demo2.pavothemes.com/bookory/wp-content/uploads/2022/02/h2_img.png" alt="Subcribe-image">
+                </div>
+              </div>
+            </div>
 
+          </div>
+        </div>
+        <div class="row">
+          <div class="home__blog">
+            <div class="home__category__text">
+              <div class="home__category__text__title">
+                Latest Blog Post
+              </div>
+              <div class="home__category__text__btn">
+                <a href="#">
+                  View all
+                </a>
+              </div>
+            </div>
+            <div class="home__blog__content">
+              <div class="row" style="margin: 20px 0;">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                  <div class="blog__item">
+                    <div class="blog__item__img">
+                      <a href="#">
+                        <img src="https://plus.unsplash.com/premium_photo-1677013622212-2cd4260dee5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="blog-image">
+                      </a>
+                    </div>
+                    <div class="blog__item__text">
+                      <div class="blog__item__text__date">
+                                              <span>
+                                                  12/08/2023
+                                              </span>
+                        <span>by</span>
+                        <span>Admin</span>
+                      </div>
+                      <div class="blog__item__text__title">
+                        <a href="#">
+                          Check
+                        </a>
+                      </div>
+                    </div>
+                    <div class="blog__item__btn">
+                      <div>
+                        Ltech
+                      </div>
+                      <a href="#">Read More</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home__voucher">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="home__voucher__text">
+                <div class="home__voucher__intro">
+                  The best of voucher
+                </div>
+                <div class="home__voucher__title">
+                                  <span>
+                                      SALE 30% TECHNOLOGY BOOK
+                                  </span>
+                </div>
+                <div class="home__voucher__code">
+                                  <span>
+                                      LTECH-02
+                                  </span>
+                </div>
+                <div class="home__voucher__btn">
+                  <a href="#">See more</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="home__voucher__img">
+                <img src="https://cdn-icons-png.flaticon.com/512/3366/3366105.png" alt="voucher-image">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <th:block th:replace="layout :: footer"></th:block>
+    <th:block th:replace="layout :: footer"></th:block>
 </body>
 </html>
