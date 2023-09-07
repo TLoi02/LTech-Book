@@ -23,6 +23,10 @@ public class OrderService {
 
     public Orders getOrderById(Long id){return orderRespository.findById(id).orElse(null);}
 
+    public List<Orders> getListWithDate(Integer year, Integer month){
+        return orderRespository.findListSaleWithDate(year, month);
+    }
+
     public void updateOrder(Orders orders){orderRespository.save(orders);}
 
     public List<Orders> getAll(){
@@ -30,7 +34,7 @@ public class OrderService {
     }
 
     public List<Orders> getListAdmin(){
-        List<String> excludedTypeNames = Arrays.asList("Hoàn thành", "Hủy");
+        List<String> excludedTypeNames = Arrays.asList("Chưa xác nhận", "Hoàn thành", "Hủy");
         return orderRespository.findByType_NameNotIn(excludedTypeNames);
     }
 

@@ -20,6 +20,12 @@ public class Orders {
     @Column
     private Boolean isPaid;
 
+    @Column
+    private String image;
+
+    @Column
+    private String content;
+
     @Column(name = "total_amount") // Add the total amount column
     private long totalAmount;
 

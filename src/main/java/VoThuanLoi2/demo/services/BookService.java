@@ -107,4 +107,46 @@ public class BookService {
     public String getTitleBookWithId(Long id){
         return getBookById(id).getTitle();
     }
+
+    public List<Book> getListBookComments(Integer userId){
+        return repo.findBooksByUserId(userId);
+    }
+
+    public List<Book> getListBookFavorite(Integer userId){
+        return repo.findBookFavoriteByUserId(userId);
+    }
+
+    public List<Book> getTopBestSeller(Integer value){
+        return repo.findBestSeller(value);
+    }
+
+    public List<Book> getTopNewProduct(Integer value){
+        return repo.findNewProduct(value);
+    }
+
+    public List<Book> getListTopSale(Integer value){return repo.findBookTopSale(value);}
+
+    public Boolean isSale(Long id){
+        Book b = repo.findByCategoryId(id).get(0);
+        if (b.getDiscountPercentage() != null)
+            return true;
+        return false;
+    }
+
+    public void deleteSale(Long id){
+        List<Book> listSale = repo.findByCategoryId(id);
+
+        for (Book book : listSale) {
+            book.setDiscountPercentage(null);
+            repo.save(book);
+        }
+    }
+
+    public void setSale(Long id, Double value){
+        List<Book> listBook = repo.findByCategoryId(id);
+        for (Book book : listBook) {
+            book.setDiscountPercentage(value);
+            repo.save(book);
+        }
+    }
 }

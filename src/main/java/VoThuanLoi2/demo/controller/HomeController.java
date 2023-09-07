@@ -2,14 +2,16 @@ package VoThuanLoi2.demo.controller;
 
 import VoThuanLoi2.demo.entity.Blog;
 import VoThuanLoi2.demo.entity.Book;
-import VoThuanLoi2.demo.services.BlogService;
-import VoThuanLoi2.demo.services.BookService;
-import VoThuanLoi2.demo.services.CategoryService;
+import VoThuanLoi2.demo.entity.Category;
+import VoThuanLoi2.demo.entity.Subscribe;
+import VoThuanLoi2.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,52 +24,57 @@ public class HomeController {
     private CategoryService categoryService;
     @Autowired
     private BookService bookService;
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private SubscribeService subscribeService;
 
     @GetMapping("/")
-    public String handel(Model model){
+    public String handel(){
+
+
         return "redirect:/home";
     }
 
     @GetMapping("/home")
     public String index(Model model){
-        //props
-        //Get 6 lasted blog
-        List<Blog> findBlog = blogService.getLastedBlog(6);
-        List<Blog> listSlide = findBlog.subList(0,2);
-        List<Blog> listLasted = findBlog.subList(2,6);
-
-        //Get 8 Product
-        List<Book> listBook = bookService.getListBookWithLimit(8);
-        List<Book> listFirst = new ArrayList<>();
-        List<Book> listSecond = new ArrayList<>();
-
-        //Handel sublist
-        if (listBook.size() >= 4) {
-            listFirst = listBook.subList(0, 4);
-            if (listBook.size() >= 8) {
-                listSecond = listBook.subList(4, 8);
-            } else {
-                listSecond = listBook.subList(4, Math.min(listBook.size(), 8));
-            }
-        } else {
-            listFirst = listBook.subList(0, listBook.size());
+        List<Category> listCategory = categoryService.getAllCategories();
+        List<List<Category>> handelSubList = new ArrayList<>();
+        for (int i = 0; i < listCategory.size(); i += 3) {
+            int end = Math.min(i + 3, listCategory.size());
+            List<Category> subList = listCategory.subList(i, end);
+            handelSubList.add(subList);
         }
 
-        model.addAttribute("listBookFirst", listFirst);
-        if(listSecond.size() > 0){
-            model.addAttribute("listBookSecond", listSecond);
-            model.addAttribute("typeBook","have");
-        }
-        else{
-            model.addAttribute("typeBook","not");
-        }
-
-        //List category
-        model.addAttribute("listCategory", categoryService.getListWithLimit(4));
-
-        model.addAttribute("listSlide",listSlide);
-        model.addAttribute("listLasted",listLasted);
+        model.addAttribute("handelSubList", handelSubList);
+        model.addAttribute("listSeller", bookService.getTopBestSeller(6));
+        model.addAttribute("listNewProduct", bookService.getTopNewProduct(3));
+        model.addAttribute("listLastedBlog", blogService.getLastedBlog(4));
+        model.addAttribute("sliderList", blogService.getLastedBlog(2));
+        model.addAttribute("listTopSale", bookService.getListTopSale(4));
+        model.addAttribute("subscribe", new Subscribe());
 
         return "home/index";
+    }
+
+    @PostMapping("/subscribe")
+    public String handelForm(@RequestParam String email){
+        Subscribe checkSub = subscribeService.findByEmail(email);
+
+        if (checkSub == null){
+            Subscribe s = new Subscribe();
+            s.setEmail(email);
+            subscribeService.save(s);
+
+            //Handel notify to mail
+            String body = "Thank you very much for subscribing to our website! " +
+                    "\nWe will send you the latest offers exclusively. ";
+            //mail Customer
+            String mailAddress = email;
+            //send mail
+            mailService.sendNewMail(mailAddress,"You have successfully subscribed to the LTech", body);
+        }
+
+        return "success";
     }
 }

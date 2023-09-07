@@ -7,73 +7,100 @@
 </head>
 <body>
     <th:block th:replace="layout :: header"></th:block>
-    <div class="container content">
-        <div class="row" style="margin-top: 20px;">
-            <!--Cart content-->
-            <div class="col-md-4 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Giỏ hàng</span>
-                </h4>
-                <!--List product cart-->
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed" th:each="book:${listCart}">
-                        <div>
-                            <h6 class="my-0" th:text = "${book.title}"></h6>
-                            <small class="text-muted" th:text = "${book.author}"></small>
-                        </div>
-                        <span class="text-muted" th:text = "${book.getAmount()}"></span>
-                    </li>
-
-                    <!--Total money-->
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Thành tiền</span>
-                        <strong th:text = "${totalPrice}"></strong>
-                    </li>
-                </ul>
+    <div class="container">
+        <div class="row">
+            <div class="job__title">
+                <div class="job__title__name">
+                    Checkout
+                </div>
+                <div class="job__title_nav">
+                    <div class="job__title__nav__item first">
+                        <a href="/cart">
+                            Cart
+                        </a>
+                    </div>
+                    <div class="job__title__nav__item">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="job__title__nav__item last">
+                        Checkout
+                    </div>
+                </div>
             </div>
-            <!--Checkout content-->
-            <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Thanh toán</h4>
-                <form class="needs-validation" th:action="@{/cart/checkout/{id}(id=${user.user_id})}" th:object="${user}" method="post">
-                    <!--name input-->
-                    <div class="mb-3">
-                        <label for="name">Họ và tên</label>
-                        <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên người nhận" required autofocus th:field="*{name}">
-                        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+        <div class="row" style="margin: 20px 0;">
+            <div class="col-lg-8 col-md-12 col-sm-12" style="padding: 20px 40px;border-radius: 20px; border: 1px solid grey;">
+                <div class="check-out__info">
+                    <div class="check-out__info__title">
+                        Shiping Infomation
                     </div>
-                    <!--phone input-->
-                    <div class="mb-3">
-                        <label for="phone">Điện thoại</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Nhập số điện thoại" required th:field="*{phone}">
-                        <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
-                    </div>
-                    <!--address input-->
-                    <div class="mb-3">
-                        <label for="address">Địa chỉ</label>
-                        <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ nhận hàng" required th:field="*{address}">
-                        <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
-                    </div>
-
-                    <!--Payment choice-->
-                    <hr class="mb-4">
-                    <h4 class="mb-3">Phương thức thanh toán</h4>
-                    <div class="d-block my-3">
-                        <div class="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
-                            <label class="custom-control-label" for="credit">Thanh toán khi nhận hàng</label>
+                    <form th:action="@{/cart/checkout}" th:object="${user}" method="post" class="check-out__info__form">
+                        <input type="text" required placeholder="Full name *" th:field="*{name}">
+                        <input type="text" required placeholder="Phone number *" th:field="*{phone}">
+                        <select name="province" class="city__content" required>
+                            <option value="">Province</option>
+                        </select>
+                        <select name="district" class="district__content" required>
+                            <option value="">District</option>
+                        </select>
+                        <select name="ward" class="ward__content" required>
+                            <option value="">Ward</option>
+                        </select>
+                        <input type="text" required placeholder="Your address *" th:field="*{address}">
+                        <select name="payment" >
+                            <option value="cash">Cash on delivery</option>
+                            <option value="vnpay">VNPAY</option>
+                            <option value="qr">QR Code</option>
+                        </select>
+                        <button>Check Out</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="check-out__summary">
+                    <div class="check-out__summary__list">
+                        <div class="check-out__summary__item" th:each="book:${listCart}">
+                            <div class="check-out__summary__item__name">
+                                <span th:text = "${book.title}"></span>
+                            </div>
+                            <div class="check-out__summary__item__price">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span th:text = "${book.price}"></span>
+                            </div>
                         </div>
-                        <div class="custom-control custom-radio">
-                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" disabled>
-                            <label class="custom-control-label" for="debit">Thanh toán qua Momo (Tính năng đang phát triển)</label>
+                    </div>
+                    <form class="check-out__summary__form" th:if="${voucherValue == 0}" th:action="@{/cart/checkout/apply-voucher}" method="post">
+                        <input type="text" id="" placeholder="Giftcode here" required name="voucher">
+                        <button type="submit">Apply</button>
+                    </form>
+                    <div class="check-out__summary__money">
+                        <div class="check-out__summary__money__item">
+                            <span>Voucher</span>
+                            <div class="check-out__summary__money__item__value">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span th:text = "${voucherValue}"></span>
+                            </div>
+                        </div>
+                        <div class="check-out__summary__money__item">
+                            <span>Shipping</span>
+                            <div class="check-out__summary__money__item__value">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span>0</span>
+                            </div>
+                        </div>
+                        <div class="check-out__summary__money__item">
+                            <span style="font-weight: 650;">Total</span>
+                            <div class="check-out__summary__money__item__value">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span th:text = "${totalPrice}"></span>
+                            </div>
                         </div>
                     </div>
-
-                    <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Đặt hàng</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
+    <script th:src="@{/js/handel-city.js}"></script>
     <th:block th:replace="layout :: footer"></th:block>
 </body>
 </html>

@@ -8,64 +8,126 @@
 </head>
 <body>
   <th:block th:replace="layout :: header"></th:block>
-  <!--Content empty product-->
-  <div class="text-center edit-account" th:if="${type == 'not'}">
-    Chúng tôi không có sản phẩm bạn cần tìm.
-    </p>
-    <a href="/home" class="btn btn-primary">Trở về trang chủ</a>
-  </div>
-
-  <!--Content have product-->
-  <div layout:fragment="content" class="container content" th:if="${type == 'have'}">
-    <div class="row" style="background-color: #3333; display: flex; flex-direction: column; align-items: center;">
-      <div class="product__title">
-        <h4>Sách theo thể loại</h4>
-      </div>
-      <ul style="list-style: none; display: flex;">
-        <li>
-          <a class="btn btn-primary" href="/book/list" style="margin-right: 5px;">Tất cả sách</a>
-        </li>
-        <li th:each="category:${listCategory}">
-          <a class="btn btn-success"th:href="@{/book/list/category/{id}(id=${category.id})}"
-             th:text = "${category.name}" style="margin-right: 5px;"></a>
-        </li>
-      </ul>
-    </div>
-    <div class="product__title">
-      <h4 th:text = "${titlePage}"></h4>
-    </div>
+  <div layout:fragment="content" class="container" >
     <div class="row">
-      <!--Product content-->
-      <!--Product content item-->
-      <div class="col-lg-3 col-md-6 col-sm-12 product__content" th:each="book:${listBook}">
-        <div class="card product__item">
-          <a class="product__itemt-link" th:href="@{/book/{slug}(slug=${book.title})}">
-            <img th:src="@{${book.image}}"
-                 class="card-img-top" alt="Book_image"
-                  style="height: 300px; object-fit: cover;"
-            />
-            <div class="card-body">
-              <h5 class="card-title book_title" th:text = "${book.title}"></h5>
-              <p class="card-text card__product-desc" th:text = "${book.intro}">
-              </p>
-            </div>
-          </a>
-          <h5 class="price" th:text = "${book.price}"></h5>
-          <a aria-disabled="true" class="btn btn-secondary" th:if="${book.quantity == 0}" >Hết hàng</a>
-          <a th:if="${book.quantity != 0}" class="btn btn-outline-primary" th:href="@{/cart/add/{id}(id=${book.id})}">Thêm vào giỏ hàng</a>
+      <div class="job__title">
+        <div class="job__title__name">
+          Shop
+        </div>
+        <div class="job__title_nav">
+          <div class="job__title__nav__item first">
+            <a href="/">
+              Home
+            </a>
+          </div>
+          <div class="job__title__nav__item">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </div>
+          <div class="job__title__nav__item last">
+            Shop
+          </div>
         </div>
       </div>
     </div>
-    <!--Paging-->
-    <div class="row paging__cotent">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center" >
-          <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-            <a th:if="${typePaging == 'all'}" class="page-link" th:href="@{'/book/list/' + ${i}}">[[${i}]]</a>
-            <a th:if="${typePaging == 'one'}" class="page-link" th:href="@{'/book/list/category/' + ${idPaging} + '/' + ${i}}">[[${i}]]</a>
-          </li>
-        </ul>
-      </nav>
+    <div class="row">
+      <div class="product__category">
+        <div class="product__category__title">
+          Categories
+        </div>
+        <div class="product__category__content">
+          <div class="swiper swiper__product-category">
+            <div class="swiper-wrapper" >
+              <div class="swiper-slide" th:each="list : ${handelSubList}">
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 col-sm-12" th:each="category : ${list}">
+                    <a th:href="@{/book/list/category/{id}(id=${category.id})}" style="text-decoration: none;">
+                      <div class="product__category__item">
+                        <div class="product__category__item__img">
+                          <img src="https://pixlok.com/wp-content/uploads/2021/12/Technology-Icon-0oikef.png" alt="category-image">
+                        </div>
+                        <div class="product__category__item__name" th:text="${category.name}">
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-button-prev" style="margin-left: -12px;"></div>
+            <div class="swiper-button-next" style="margin-right: -12px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Content have product-->
+    <div class="row" th:if="${type == 'have'}">
+      <div class="col-lg-3 col-md-6 col-sm-12" style="margin-top: 20px;" th:each="book:${listBook}">
+        <div class="product__content__item">
+          <div class="product__content__item__img">
+            <a th:href="@{/book/detail/{id}(id=${book.id})}">
+              <img th:src="@{${book.image}}" alt="book-image">
+            </a>
+          </div>
+          <div class="product__content__item__title">
+            <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}"></a>
+          </div>
+          <div class="product__content__item__author" >
+            <span th:text = "${book.author}"></span>
+          </div>
+          <div class="product__content__item__price" th:if="${book.discountPercentage == null}">
+            <div class="product__content__item__price__main">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+              <span th:text = "${book.price}"></span>
+            </div>
+          </div>
+          <div class="product__content__item__price" th:if="${book.discountPercentage != null}">
+            <div class="product__content__item__price__main">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+              <span th:text = "${book.getPriceSale()}"></span>
+            </div>
+            <div class="product__content__item__price__sale">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+              <span th:text = "${book.price}"></span>
+            </div>
+          </div>
+          <div class="product__content__item__btn">
+            <a th:href="@{/cart/add/{id}(id=${book.id})}">
+              Add to cart
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Can't find product-->
+    <div class="row" th:if="${type == 'not'}">
+        <div class="product__error">
+            <div class="product__error__type">
+                FAIL
+            </div>
+            <div class="product__error__desc">
+                Sorry we don't have a product you want!
+            </div>
+            <div class="product__error__btn">
+                <a href="/">Home Page</a>
+            </div>
+        </div>
+    </div>
+    <!--Paging unsuccessful-->
+    <div class="row" th:if="${type == 'have'}">
+      <div class="product__paging">
+        <div class="product__paging__item"  th:each="i: ${#numbers.sequence(1, totalPages)}">
+          <a th:if="${typePaging == 'all'}" th:href="@{'/book/list/' + ${i}}">[[${i}]]</a>
+          <a th:if="${typePaging == 'one'}" th:href="@{'/book/list/category/' + ${idPaging} + '/' + ${i}}">[[${i}]]</a>
+        </div>
+        <!--
+        <div class="product__paging__item">
+          <a href="#">2</a>
+        </div>
+        <div class="product__paging__item">
+          <a href="#">3</a>
+        </div>
+        -->
+      </div>
     </div>
   </div>
   <th:block th:replace="layout :: footer"></th:block>

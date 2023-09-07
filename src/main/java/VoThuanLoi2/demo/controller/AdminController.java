@@ -5,33 +5,25 @@ import VoThuanLoi2.demo.services.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.*;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.Resource;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -54,24 +46,18 @@ public class AdminController {
     @Autowired
     private TypeService typeService;
     private final FileUpload fileUpload;
+    @Autowired
+    private SubscribeService subscribeService;
+    @Autowired
+    private VoucherService voucherService;
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("/dashboard")
     public String index(Model model, Long idCategory){
-        model.addAttribute("listCategory", categoryService.getAllCategories());
-
-        if(idCategory == null)
-            model.addAttribute("listBook", bookService.getAll());
-        if(idCategory != null)
-            model.addAttribute("listBook", bookService.getListBookWitdIdCategory(idCategory));
-
-
-        model.addAttribute("listBlog", blogService.getAll());
-        model.addAttribute("listJob", jobService.getAll());
-        model.addAttribute("listApply",applyService.getAll());
-        model.addAttribute("listUser",userService.getUsersByRoleId(1));
-        model.addAttribute("listOrder",orderService.getListAdmin());
-        model.addAttribute("listOrderSuccess",orderService.getOrderWithNameType("Thành công"));
-        model.addAttribute("listOrderUnSuccess",orderService.getOrderWithNameType("Hủy"));
+        model.addAttribute("listOrdersComplete", orderService.getOrderWithNameType("Hoàn thành"));
+        model.addAttribute("listOrdersCancel", orderService.getOrderWithNameType("Hủy"));
+        model.addAttribute("listOrderDate", orderService.getListWithDate(LocalDate.now().getYear(), LocalDate.now().getMonthValue()));
 
         return "admin/index";
     }
@@ -83,34 +69,39 @@ public class AdminController {
     }
 
     //Handel category
-    @GetMapping("/category/create")
-    public String createCategory(Model model){
-        model.addAttribute("category",new Category());
-        return "admin/category/create";
+    @GetMapping("/category")
+    public String indexCategory(Model model){
+        model.addAttribute("listCategory", categoryService.getAllCategories());
+        model.addAttribute("category", new Category());
+
+        return "admin/category";
     }
     @PostMapping("/category/create")
     public String createCategory(@Valid Category newCategory,
                                  BindingResult result,
                                  Model model){
         if (result.hasErrors()){
-            return "admin/category/create";
+            return "admin/category";
         }
         categoryService.saveCategory(newCategory);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/category";
     }
-    @GetMapping("/category/edit/{id}")
+    @GetMapping("/category/update/{id}")
     public String editCategory(@PathVariable("id") Long id, Model model){
         Category category = categoryService.getCategoryById(id);
         if (category == null){
             return "not-found";
         }
         model.addAttribute("category", category);
-        return "admin/category/edit";
+        return "admin/update-category";
     }
-    @PostMapping("/category/edit/{id}")
-    public String editCategory(@PathVariable("id") Long id, @Valid @ModelAttribute("category") Category updatedCategory, BindingResult result, Model model){
+    @PostMapping("/category/update/{id}")
+    public String editCategory(@PathVariable("id") Long id,
+                               @Valid @ModelAttribute("category") Category updatedCategory,
+                               BindingResult result,
+                               Model model){
         if (result.hasErrors()){
-            return "admin/category/edit";
+            return "admin/update-category";
         }
         Category category = categoryService.getCategoryById(id);
         if (category == null){
@@ -118,21 +109,23 @@ public class AdminController {
         }
         category.setName(updatedCategory.getName());
         categoryService.saveCategory(category);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/category";
     }
     @GetMapping("/category/delete/{id}")
     public String deleteCategory(@PathVariable("id") Long id){
         categoryService.deleteCategory(id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/category";
     }
 
 
     //Handel Book
-    @GetMapping("/book/create")
-    public String createBook(Model model){
+    @GetMapping("/product")
+    public String indexProduct(Model model){
+        model.addAttribute("listProduct", bookService.getAll());
         model.addAttribute("book",new Book());
         model.addAttribute("categories",categoryService.getAllCategories());
-        return "admin/book/create";
+
+        return "admin/product";
     }
     @PostMapping("/book/create")
     public String createBook(@Valid Book newBook,
@@ -141,17 +134,20 @@ public class AdminController {
                          Model model) throws IOException {
         if (result.hasErrors()){
             model.addAttribute("categories",categoryService.getAllCategories());
-            return "admin/book/create";
+            return "admin/product";
         }
         if (imageProduct != null && imageProduct.getSize() > 0){
             String imageURL = fileUpload.uploadFile(imageProduct);
             newBook.setImage(imageURL);
         }
 
+        //Set date post
+        newBook.setDatePost(new Date());
+
         bookService.add(newBook);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/product";
     }
-    @GetMapping("/book/edit/{id}")
+    @GetMapping("/book/update/{id}")
     public String editBook(@PathVariable("id") Long id, Model model){
         Book book = bookService.getBookById(id);
         if (book == null){
@@ -159,9 +155,9 @@ public class AdminController {
         }
         model.addAttribute("categories",categoryService.getAllCategories());
         model.addAttribute("book", book);
-        return "admin/book/edit";
+        return "admin/update-product";
     }
-    @PostMapping("/book/edit/{id}")
+    @PostMapping("/book/update/{id}")
     public String editBook(@PathVariable("id") Long id,
                              @RequestParam MultipartFile imageProduct,
                              @Valid @ModelAttribute("book") Book updatedBook,
@@ -169,7 +165,7 @@ public class AdminController {
                              Model model) throws IOException {
         if (result.hasErrors()){
             model.addAttribute("categories",categoryService.getAllCategories());
-            return "admin/book/edit";
+            return "admin/update-product";
         }
 
         Book book = bookService.getBookById(id);
@@ -194,22 +190,25 @@ public class AdminController {
         book.setPages(updatedBook.getPages());
         book.setQuantity(updatedBook.getQuantity());
         book.setCategory(updatedBook.getCategory());
+        book.setDatePost(new Date());
 
         bookService.updateBook(book);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/product";
     }
     @GetMapping("/book/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id){
         bookService.deleteBook(id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/product";
     }
 
 
     //Handel blog
-    @GetMapping("/blog/create")
-    public String createBlog(Model model){
-        model.addAttribute("blog",new Blog());
-        return "admin/blog/create";
+    @GetMapping("/blog")
+    public String indexblog(Model model){
+        model.addAttribute("listBlog", blogService.getAll());
+        model.addAttribute("blog", new Blog());
+
+        return "admin/blog";
     }
     @PostMapping("/blog/create")
     public String createBlog(@Valid Blog newBlog,
@@ -217,7 +216,7 @@ public class AdminController {
                          BindingResult result,
                          Model model) throws IOException {
         if (result.hasErrors()){
-            return "admin/blog/create";
+            return "admin/blog";
         }
 
         if (imageBlog != null && imageBlog.getSize() > 0){
@@ -229,18 +228,18 @@ public class AdminController {
         newBlog.setDatepost(LocalDate.now());
 
         blogService.add(newBlog);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/blog";
     }
-    @GetMapping("/blog/edit/{id}")
+    @GetMapping("/blog/update/{id}")
     public String editBlog(@PathVariable("id") Long id, Model model){
         Blog blog = blogService.getBlogById(id);
         if (blog == null){
             return "not-found";
         }
         model.addAttribute("blog", blog);
-        return "admin/blog/edit";
+        return "admin/update-blog";
     }
-    @PostMapping("/blog/edit/{id}")
+    @PostMapping("/blog/update/{id}")
     public String editBlog(@PathVariable("id") Long id,
                            @RequestParam MultipartFile imageBlog,
                            @Valid @ModelAttribute("blog") Blog updateBlog,
@@ -248,7 +247,7 @@ public class AdminController {
                            Model model) throws IOException {
         if (result.hasErrors()){
             model.addAttribute("categories",categoryService.getAllCategories());
-            return "admin/blog/edit";
+            return "admin/update-blog";
         }
         Blog blog = blogService.getBlogById(id);
         if (blog == null){
@@ -262,44 +261,47 @@ public class AdminController {
         blog.setIntro(updateBlog.getIntro());
         blog.setContent(updateBlog.getContent());
         blogService.add(blog);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/blog";
     }
     @GetMapping("/blog/delete/{id}")
     public String deleteBlog(@PathVariable("id") Long id){
         blogService.deleteBlog(id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/blog";
     }
 
 
     //Handel job
-    @GetMapping("/job/create")
-    public String createJob(Model model){
-        model.addAttribute("job",new Job());
-        return "admin/job/create";
+    @GetMapping("/job")
+    public String indexJob(Model model){
+        model.addAttribute("listJob", jobService.getAll());
+        model.addAttribute("listApply", applyService.getAll());
+        model.addAttribute("job", new Job());
+
+        return "admin/job";
     }
     @PostMapping("/job/create")
     public String createJob(@Valid Job newJob,
                                  BindingResult result,
                                  Model model){
         if (result.hasErrors()){
-            return "admin/job/create";
+            return "admin/job";
         }
         jobService.saveJob(newJob);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/job";
     }
-    @GetMapping("/job/edit/{id}")
+    @GetMapping("/job/update/{id}")
     public String editJob(@PathVariable("id") Long id, Model model){
         Job job = jobService.getJobById(id);
         if (job == null){
             return "not-found";
         }
         model.addAttribute("job", job);
-        return "admin/job/edit";
+        return "admin/update-job";
     }
-    @PostMapping("/job/edit/{id}")
+    @PostMapping("/job/update/{id}")
     public String editJob(@PathVariable("id") Long id, @Valid @ModelAttribute("job") Job updateJob, BindingResult result, Model model){
         if (result.hasErrors()){
-            return "admin/job/edit";
+            return "admin/update-job";
         }
         Job job = jobService.getJobById(id);
         if (job == null){
@@ -308,56 +310,58 @@ public class AdminController {
         job.setTitle(updateJob.getTitle());
         job.setContent(updateJob.getContent());
         jobService.saveJob(job);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/job";
     }
     @GetMapping("/job/delete/{id}")
     public String deleteJob(@PathVariable("id") Long id){
         jobService.deleteJob(id);
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/job";
     }
 
 
     //Handel apply
     @GetMapping("/apply/download/{id}")
-    public ResponseEntity<InputStreamResource> downloadImage(@PathVariable("id") Long id) throws IOException {
-        Apply apply = applyService.findById(id);
-
-        if (apply == null || apply.getImage() == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        File imageFile = new File(apply.getImage());
-
-        if (!imageFile.exists()) {
-            return ResponseEntity.notFound().build();
-        }
-
+    public ResponseEntity<ByteArrayResource> downloadImage(@PathVariable("id") Long id) {
         try {
-            FileInputStream fileInputStream = new FileInputStream(imageFile);
-            InputStreamResource resource = new InputStreamResource(fileInputStream);
+            String getURL = applyService.findById(id).getImage();
+            URL url = new URL(getURL);
+            URLConnection connection = url.openConnection();
+            InputStream inputStream = connection.getInputStream();
+
+            byte[] bytes = inputStream.readAllBytes();
+            ByteArrayResource resource = new ByteArrayResource(bytes);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=image.jpg");
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "cv.jpg");
 
             return ResponseEntity.ok()
                     .headers(headers)
-                    .contentType(MediaType.IMAGE_JPEG)
                     .body(resource);
-        } catch (FileNotFoundException e) {
-            return ResponseEntity.notFound().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
 
+
     //Handel orders
-    @GetMapping("/order/update/{id}")
+    @GetMapping("/orders")
+    public String handelOrdersIndex(Model model){
+        model.addAttribute("listNewOrder", orderService.getOrderWithNameType("Chưa xác nhận"));
+        model.addAttribute("listOrder", orderService.getListAdmin());
+
+        return "admin/orders";
+    }
+    @GetMapping("/orders/update/{id}")
     public String handelUpdateOrder(@PathVariable("id") Long id, Model model){
         model.addAttribute("order",orderService.getOrderById(id));
         model.addAttribute("listType",typeService.getAll());
 
-        return "admin/order/edit";
+        return "admin/update-order";
     }
-    @PostMapping("/order/update/{id}")
+    @PostMapping("/orders/update/{id}")
     public String handelUpdate(@PathVariable("id") Long id, @ModelAttribute("order") Orders updateOrder){
         //Get order
         Orders order = orderService.getOrderById(id);
@@ -383,7 +387,100 @@ public class AdminController {
         return null;
     }
 
-    @GetMapping("/order/detail/{id}")
+    @GetMapping("/user")
+    public String indexUser(Model model){
+        model.addAttribute("listSubscribe", subscribeService.getAll());
+        model.addAttribute("listVoucher", voucherService.getAll());
+
+        return "admin/user";
+    }
+
+
+    //Sales handel
+    @GetMapping("/sale")
+    public String indexSales(Model model){
+        model.addAttribute("listCategory", categoryService.getAllCategories());
+        model.addAttribute("listBook", bookService.getAll());
+
+        return "admin/sales";
+    }
+    @PostMapping("/sale/create")
+    public String createSale(@RequestParam("value") Double value,
+                             @RequestParam("category") Long categoryId,
+                             Model model){
+        bookService.setSale(categoryId, value);
+        return "redirect:/admin/sale";
+    }
+    @GetMapping("/sale/delete/{id}")
+    public String deleteSale(@PathVariable("id") Long id){
+        Boolean isSale = bookService.isSale(id);
+
+        if (isSale){
+            bookService.deleteSale(id);
+            return "redirect:/admin/sale";
+        }
+
+        return "redirect:/admin/sale";
+    }
+
+
+    //Voucher handel
+    @GetMapping("/voucher")
+    public String indexVoucher(Model model){
+        model.addAttribute("listVoucher", voucherService.getAll());
+        model.addAttribute("listCategory", categoryService.getAllCategories());
+
+        return "admin/voucher";
+    }
+    @PostMapping("/voucher/create")
+    public String createVoucher(@RequestParam("code") String code,
+                                 @RequestParam("value") Double value,
+                                 @RequestParam("category") Long categoryId,
+                                 Model model){
+        Category getCategory = categoryService.getCategoryById(categoryId);
+
+        Voucher v = new Voucher();
+        v.setVoucherCode(code);
+        v.setDiscountAmount(value);
+        v.setCategory(getCategory);
+        voucherService.createVoucher(v);
+
+        return "redirect:/admin/voucher";
+    }
+    @GetMapping("/voucher/delete/{id}")
+    public String deleteVoucher(@PathVariable("id") Long id){
+        voucherService.deleteVoucher(id);
+        return "redirect:/admin/voucher";
+    }
+    @GetMapping("/voucher/sent/{id}")
+    public String sentVoucher(@PathVariable("id") Long id){
+        Voucher findVoucher = voucherService.getVoucherByID(id);
+
+        if (findVoucher.getIsSent() == null){
+            List<Subscribe> listSub = subscribeService.getAll();
+
+            for (Subscribe subscribe : listSub) {
+                String body = "We sincerely appreciate your following our website, and as a token of our gratitude, we are pleased to send you a shopping voucher with the following content and usage details: " +
+                        "\n\n- Voucher code: "+findVoucher.getVoucherCode()+"."+
+                        "\n- Voucher value: "+findVoucher.getDiscountAmount()+"."+
+                        "\n- Voucher use for category name: "+findVoucher.getCategory().getName()+"."+
+                        "\nWe are delighted to send you this voucher and hope you can find a product you like on our website!";
+                //mail Customer
+                String mailAddress = subscribe.getEmail();
+                //send mail
+                mailService.sendNewMail(mailAddress,"Ltech is giving you a new voucher", body);
+            }
+
+            findVoucher.setIsSent(true);
+            //update voucher type
+            voucherService.createVoucher(findVoucher);
+            return "redirect:/admin/user";
+        }
+
+        return "redirect:/admin/user";
+    }
+
+    @GetMapping("/invoice/{id}")
     public String handelDetail(@PathVariable("id") Long id,
                                Model model,
                                Authentication authentication){
@@ -396,6 +493,4 @@ public class AdminController {
 
         return "invoice";
     }
-
-
 }

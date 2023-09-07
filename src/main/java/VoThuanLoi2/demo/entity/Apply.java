@@ -21,9 +21,9 @@ public class Apply {
     @NotNull(message = "Không được để trống email")
     private String email;
 
-    @Column(name = "phone")
-    @NotNull(message = "Không được để trống số điện thoại")
-    private String phone;
+    @Column(name = "message")
+    @NotNull(message = "Không được để trống thư ngõ")
+    private String message;
 
     @Column(name ="image")
     private String image;

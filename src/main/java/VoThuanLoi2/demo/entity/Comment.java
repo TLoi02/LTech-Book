@@ -3,6 +3,8 @@ package VoThuanLoi2.demo.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name="comment")
@@ -13,6 +15,9 @@ public class Comment {
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
+
+    @Column
+    private Date comment__date;
 
     @ManyToOne
     @JoinColumn(name = "book_id")

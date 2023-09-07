@@ -7,20 +7,19 @@
 </head>
 <body>
     <th:block th:replace="layout :: header"></th:block>
-    <div layout:fragment="content">
+    <div>
       <div class="home__slider">
         <div class="container">
           <div class="swiper swiper__product-category">
             <div class="swiper-wrapper">
-              <div class="swiper-slide">
+              <div class="swiper-slide" th:each="blog:${sliderList}">
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="home__slider__text">
-                      <div class="home__slider__text__title">
-                        Sale sach cong nghe thong tin
+                      <div class="home__slider__text__title" th:text = "${blog.title}">
                       </div>
                       <div class="home__slider__text__btn">
-                        <a href="#">
+                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}">
                           Detail
                         </a>
                       </div>
@@ -28,30 +27,7 @@
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="home__slider__img">
-                      <img src="https://demo2.pavothemes.com/bookory/wp-content/uploads/2022/02/revslider_book-4.png"
-                           alt="slider-image">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="home__slider__text">
-                      <div class="home__slider__text__title">
-                        Sale sach cong nghe thong tin
-                      </div>
-                      <div class="home__slider__text__btn">
-                        <a href="#">
-                          Detail
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="home__slider__img">
-                      <img src="https://demo2.pavothemes.com/bookory/wp-content/uploads/2022/02/revslider_book-4.png"
-                           alt="slider-image">
+                      <img th:src="@{${blog.image}}" alt="slider-image">
                     </div>
                   </div>
                 </div>
@@ -72,33 +48,39 @@
               </div>
               <div class="home__best-seller__content">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12" th:each="book:${listSeller}">
                     <div class="home__new__content__item home__best-seller__content__item">
                       <div class="home__new__content__item__img">
-                        <a href="#">
-                          <img src="https://bizweb.dktcdn.net/100/180/408/products/chien-tranh-tien-te-1-c0c72970-7152-44f1-b27f-10e698f2acff.jpg?v=1667607754867"
+                        <a th:href="@{/book/detail/{id}(id=${book.id})}">
+                          <img img th:src="@{${book.image}}"
                                alt="book-image">
                         </a>
                       </div>
                       <div class="home__new__content__item__text">
                         <div class="home__new__content__item__text__title">
-                          <a href="#">Dac Nhan Tam</a>
+                          <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}"></a>
                         </div>
                         <div class="home__new__content__item__text__author">
-                          <span>Vo Thuan Loi</span>
+                          <span th:text = "${book.author}"></span>
                         </div>
-                        <div class="home__new__content__item__text__price">
+                        <div class="home__new__content__item__text__price" th:if="${book.discountPercentage == null}">
                           <div class="home__new__content__item__text__price__main">
                             <i class="fa fa-usd" aria-hidden="true"></i>
-                            <span>20.000</span>
+                            <span th:text = "${book.price}"></span>
+                          </div>
+                        </div>
+                        <div class="home__new__content__item__text__price" th:if="${book.discountPercentage != null}">
+                          <div class="home__new__content__item__text__price__main">
+                            <i class="fa fa-usd" aria-hidden="true"></i>
+                            <span th:text = "${book.getPriceSale()}"></span>
                           </div>
                           <div class="home__new__content__item__text__price__sale">
                             <i class="fa fa-usd" aria-hidden="true"></i>
-                            <span>30.000</span>
+                            <span th:text = "${book.price}"></span>
                           </div>
                         </div>
                         <div class="home__new__content__item__text__btn">
-                          <a href="#">
+                          <a th:href="@{/cart/add/{id}(id=${book.id})}">
                             Add to cart
                           </a>
                         </div>
@@ -115,63 +97,37 @@
                 New Book
               </div>
               <div class="home__new__content">
-                <div class="home__new__content__item">
+                <div class="home__new__content__item" th:each="book:${listNewProduct}">
                   <div class="home__new__content__item__img">
-                    <a href="#">
-                      <img src="https://bizweb.dktcdn.net/100/180/408/products/chien-tranh-tien-te-1-c0c72970-7152-44f1-b27f-10e698f2acff.jpg?v=1667607754867"
-                           alt="book-image">
+                    <a th:href="@{/book/detail/{id}(id=${book.id})}">
+                      <img th:src="@{${book.image}}" alt="book-image">
                     </a>
                   </div>
                   <div class="home__new__content__item__text">
                     <div class="home__new__content__item__text__title">
-                      <a href="#">Dac Nhan Tam</a>
+                      <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}">Dac Nhan Tam</a>
                     </div>
                     <div class="home__new__content__item__text__author">
-                      <span>Vo Thuan Loi</span>
+                      <span th:text = "${book.author}"></span>
                     </div>
-                    <div class="home__new__content__item__text__price">
+                    <div class="home__new__content__item__text__price" th:if="${book.discountPercentage == null}">
                       <div class="home__new__content__item__text__price__main">
                         <i class="fa fa-usd" aria-hidden="true"></i>
-                        <span>20.000</span>
+                        <span th:text = "${book.price}"></span>
+                      </div>
+                    </div>
+                    <div class="home__new__content__item__text__price" th:if="${book.discountPercentage != null}">
+                      <div class="home__new__content__item__text__price__main">
+                        <i class="fa fa-usd" aria-hidden="true"></i>
+                        <span th:text = "${book.getPriceSale()}"></span>
                       </div>
                       <div class="home__new__content__item__text__price__sale">
                         <i class="fa fa-usd" aria-hidden="true"></i>
-                        <span>30.000</span>
+                        <span th:text = "${book.price}"></span>
                       </div>
                     </div>
                     <div class="home__new__content__item__text__btn">
-                      <a href="#">
-                        Add to cart
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="home__new__content__item">
-                  <div class="home__new__content__item__img">
-                    <a href="#">
-                      <img src="https://bizweb.dktcdn.net/100/180/408/products/chien-tranh-tien-te-1-c0c72970-7152-44f1-b27f-10e698f2acff.jpg?v=1667607754867"
-                           alt="book-image">
-                    </a>
-                  </div>
-                  <div class="home__new__content__item__text">
-                    <div class="home__new__content__item__text__title">
-                      <a href="#">Dac Nhan Tam</a>
-                    </div>
-                    <div class="home__new__content__item__text__author">
-                      <span>Vo Thuan Loi</span>
-                    </div>
-                    <div class="home__new__content__item__text__price">
-                      <div class="home__new__content__item__text__price__main">
-                        <i class="fa fa-usd" aria-hidden="true"></i>
-                        <span>20.000</span>
-                      </div>
-                      <div class="home__new__content__item__text__price__sale">
-                        <i class="fa fa-usd" aria-hidden="true"></i>
-                        <span>30.000</span>
-                      </div>
-                    </div>
-                    <div class="home__new__content__item__text__btn">
-                      <a href="#">
+                      <a th:href="@{/cart/add/{id}(id=${book.id})}">
                         Add to cart
                       </a>
                     </div>
@@ -188,7 +144,7 @@
                 Genres Books
               </div>
               <div class="home__category__text__btn">
-                <a href="#">
+                <a href="/book/list">
                   View all
                 </a>
               </div>
@@ -198,35 +154,16 @@
                 <div class="product__category" style="border: none; padding: 0; margin-top: -10px;">
                   <div class="product__category__content">
                     <div class="swiper swiper__product-category">
-                      <div class="swiper-wrapper">
-                        <div class="swiper-slide">
+                      <div class="swiper-wrapper" >
+                        <div class="swiper-slide" th:each="list : ${handelSubList}">
                           <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                              <a href="#" style="text-decoration: none;">
+                            <div class="col-lg-4 col-md-6 col-sm-12" th:each="category : ${list}">
+                              <a th:href="@{/book/list/category/{id}(id=${category.id})}" style="text-decoration: none;">
                                 <div class="product__category__item">
                                   <div class="product__category__item__img">
-                                    <img src="https://pixlok.com/wp-content/uploads/2021/12/Technology-Icon-0oikef.png"
-                                         alt="category-image">
+                                    <img src="https://pixlok.com/wp-content/uploads/2021/12/Technology-Icon-0oikef.png" alt="category-image">
                                   </div>
-                                  <div class="product__category__item__name">
-                                    Technoloy
-                                  </div>
-                                </div>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="swiper-slide">
-                          <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                              <a href="#" style="text-decoration: none;">
-                                <div class="product__category__item">
-                                  <div class="product__category__item__img">
-                                    <img src="https://pixlok.com/wp-content/uploads/2021/12/Technology-Icon-0oikef.png"
-                                         alt="category-image">
-                                  </div>
-                                  <div class="product__category__item__name">
-                                    Technoloy
+                                  <div class="product__category__item__name" th:text="${category.name}">
                                   </div>
                                 </div>
                               </a>
@@ -243,6 +180,7 @@
             </div>
           </div>
         </div>
+        <!--Hot deals-->
         <div class="row">
           <div class="product__sale">
             <div class="product__sale__title">
@@ -250,32 +188,32 @@
             </div>
             <div class="product__sale__content">
               <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12" th:each="book:${listTopSale}">
                   <div class="product__sale__content__item">
                     <div class="product__sale__content__item__img">
-                      <a href="#">
-                        <img src="https://bizweb.dktcdn.net/100/283/734/products/dac-nhan-tam.png?v=1536810083057" alt="product-image">
+                      <a th:href="@{/book/detail/{id}(id=${book.id})}">
+                        <img th:src="@{${book.image}}" alt="product-image">
                       </a>
                     </div>
                     <div class="product__sale__content__item__title">
-                      <a href="#">Dac Nhan Tam</a>
-                      <span>25%</span>
+                      <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}"></a>
+                      <span th:text = "${book.discountPercentage}"></span>
                     </div>
                     <div class="product__sale__content__item__author">
-                      <span>Vo Thuan Loi</span>
+                      <span th:text = "${book.author}"></span>
                     </div>
                     <div class="product__sale__content__item__price">
                       <div class="product__sale__content__item__price__main">
                         <i class="fa fa-usd" aria-hidden="true"></i>
-                        <span>20.000</span>
+                        <span th:text = "${book.getPriceSale()}"></span>
                       </div>
                       <div class="product__sale__content__item__price__sale">
                         <i class="fa fa-usd" aria-hidden="true"></i>
-                        <span>30.000</span>
+                        <span th:text = "${book.price}"></span>
                       </div>
                     </div>
                     <div class="product__sale__content__item__btn">
-                      <a href="#">Add to cart</a>
+                      <a th:href="@{/cart/add/{id}(id=${book.id})}">Add to cart</a>
                     </div>
                   </div>
                 </div>
@@ -283,6 +221,7 @@
             </div>
           </div>
         </div>
+        <!--Follow-->
         <div class="row">
           <div class="home__subcribe">
             <div class="row">
@@ -294,9 +233,9 @@
                   <div class="home__subcribe__text__desc">
                     Enter your email address to receive regular updates, as well as news on upcoming events and specific offers.
                   </div>
-                  <form action="">
-                    <input type="email" placeholder="Your email address" required>
-                    <button type="submit">Subcribe</button>
+                  <form th:action="@{/subscribe}" th:object="${subscribe}" method="post" >
+                    <input type="email" th:field="*{email}" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
                   </form>
                 </div>
               </div>
@@ -316,31 +255,29 @@
                 Latest Blog Post
               </div>
               <div class="home__category__text__btn">
-                <a href="#">
+                <a href="/blog/list">
                   View all
                 </a>
               </div>
             </div>
             <div class="home__blog__content">
               <div class="row" style="margin: 20px 0;">
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12" th:each="blog:${listLastedBlog}">
                   <div class="blog__item">
                     <div class="blog__item__img">
-                      <a href="#">
-                        <img src="https://plus.unsplash.com/premium_photo-1677013622212-2cd4260dee5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="blog-image">
+                      <a th:href="@{/blog/detail/{id}(id=${blog.id})}">
+                        <img th:src="@{${blog.image}}" alt="blog-image">
                       </a>
                     </div>
                     <div class="blog__item__text">
                       <div class="blog__item__text__date">
-                                              <span>
-                                                  12/08/2023
-                                              </span>
+                        <span th:text = "${blog.datepost}">
+                        </span>
                         <span>by</span>
                         <span>Admin</span>
                       </div>
                       <div class="blog__item__text__title">
-                        <a href="#">
-                          Check
+                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text = "${blog.title}">
                         </a>
                       </div>
                     </div>
@@ -348,7 +285,7 @@
                       <div>
                         Ltech
                       </div>
-                      <a href="#">Read More</a>
+                      <a th:href="@{/blog/detail/{id}(id=${blog.id})}">Read More</a>
                     </div>
                   </div>
                 </div>
@@ -367,16 +304,16 @@
                 </div>
                 <div class="home__voucher__title">
                                   <span>
-                                      SALE 30% TECHNOLOGY BOOK
+                                      SALE 20% TECHNOLOGY BOOKS
                                   </span>
                 </div>
                 <div class="home__voucher__code">
                                   <span>
-                                      LTECH-02
+                                      LTECH-20
                                   </span>
                 </div>
                 <div class="home__voucher__btn">
-                  <a href="#">See more</a>
+                  <a href="/book/list/category/1">See more</a>
                 </div>
               </div>
             </div>

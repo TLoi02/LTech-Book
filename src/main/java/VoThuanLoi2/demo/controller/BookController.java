@@ -1,8 +1,9 @@
 package VoThuanLoi2.demo.controller;
 
 import VoThuanLoi2.demo.entity.Book;
-import VoThuanLoi2.demo.services.BookService;
-import VoThuanLoi2.demo.services.CategoryService;
+import VoThuanLoi2.demo.entity.Category;
+import VoThuanLoi2.demo.entity.User;
+import VoThuanLoi2.demo.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +39,28 @@ public class BookController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private FavoriteService favoriteService;
+    @Autowired
+    private UserService userService;
 
+
+    private User getUSer(Authentication authentication){
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) principal;
+                String username = userDetails.getUsername();
+
+                // Retrieve user from the database
+                User user = userService.getUser(username);
+                return user;
+            }
+        }
+        return null;
+    }
 
     public String getPageWithCategory(Model model, int currentPage, Long categoryID){
         Page<Book> page = null;
@@ -61,7 +85,17 @@ public class BookController {
 
         int totalPages = page.getTotalPages();
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("listCategory", categoryService.getAllCategories());
+
+        //Handel slider categories
+        List<Category> listCategory = categoryService.getAllCategories();
+        List<List<Category>> handelSubList = new ArrayList<>();
+        for (int i = 0; i < listCategory.size(); i += 3) {
+            int end = Math.min(i + 3, listCategory.size());
+            List<Category> subList = listCategory.subList(i, end);
+            handelSubList.add(subList);
+        }
+        model.addAttribute("handelSubList", handelSubList);
+
         model.addAttribute("listBook", page.getContent());
         //Type check have or doesn't product
         model.addAttribute("type","have");
@@ -78,7 +112,17 @@ public class BookController {
         model.addAttribute("typePaging","all");
 
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("listCategory", categoryService.getAllCategories());
+
+        //Handel slider categories
+        List<Category> listCategory = categoryService.getAllCategories();
+        List<List<Category>> handelSubList = new ArrayList<>();
+        for (int i = 0; i < listCategory.size(); i += 3) {
+            int end = Math.min(i + 3, listCategory.size());
+            List<Category> subList = listCategory.subList(i, end);
+            handelSubList.add(subList);
+        }
+        model.addAttribute("handelSubList", handelSubList);
+
         model.addAttribute("listBook", page.getContent());
         //Type check have or doesn't product
         model.addAttribute("type","have");
@@ -100,11 +144,8 @@ public class BookController {
         return getPageWithCategory(model, pageNumber, id);
     }
 
-    /*
     @GetMapping("/detail/{id}")
-    public String handelDetailPage(Model model, @PathVariable("id") Long id){
-        //handel for product
-
+    public String handelDetailPage(Model model, @PathVariable("id") Long id, Authentication authentication){
         //props: book, book same category
         Book findBook = bookService.getBookById(id);
         if (findBook == null){
@@ -120,32 +161,8 @@ public class BookController {
 
         model.addAttribute("book", findBook);
         model.addAttribute("listBookSame", filterList);
-
-        return "book/detail";
-    }
-     */
-
-    @GetMapping("/{title}")
-    public String handelDetailPage(Model model, @PathVariable String title){
-        //handel for product
-
-        //props: book, book same category
-        //Book findBook = bookService.getBookById(id);
-        Book findBook = bookService.getBookByTitle(title);
-
-        if (findBook == null){
-            return "error";
-        }
-
-        //Find book same category to handel
-        List<Book> filterList = bookService.getListBookByCategory(findBook.getCategory().getId(), findBook.getId());
-
-        //Handel limit of same book is 4 book
-        if (filterList.size() > 4)
-            filterList = filterList.subList(0, 4);
-
-        model.addAttribute("book", findBook);
-        model.addAttribute("listBookSame", filterList);
+        model.addAttribute("listComment", commentService.getCommentByIdBook(id));
+        model.addAttribute("isFavorite", favoriteService.isFavorite(getUSer(authentication).getUser_id(),id));
 
         return "book/detail";
     }
@@ -168,6 +185,16 @@ public class BookController {
         //Type check have or doesn't product
         String type = (result.size() != 0) ? "have" : "not";
         model.addAttribute("type",type);
+
+        //Handel slider categories
+        List<Category> listCategory = categoryService.getAllCategories();
+        List<List<Category>> handelSubList = new ArrayList<>();
+        for (int i = 0; i < listCategory.size(); i += 3) {
+            int end = Math.min(i + 3, listCategory.size());
+            List<Category> subList = listCategory.subList(i, end);
+            handelSubList.add(subList);
+        }
+        model.addAttribute("handelSubList", handelSubList);
 
         return "book/index";
     }

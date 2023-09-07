@@ -8,36 +8,62 @@
 </head>
 <body>
     <th:block th:replace="layout :: header"></th:block>
-    <div layout:fragment="content" class="container content">
-        <div class="blog__title">
-            <h4>Tin tức</h4>
-        </div>
-        <div class="row g-4">
-            <!--Blog item-->
-            <div class="col-lg-3 col-md-6 col-sm-12" th:each="blog:${listBlog}">
-                <div class="card product__item">
-                    <img th:src="@{${blog.image}}"
-                            class="card-img-top"
-                         style="height: 300px; object-fit: cover;"
-                         alt="Blog_image" />
-                    <div class="card-body">
-                        <h5 class="card-title book_title" th:text = "${blog.title}"></h5>
-                        <p class="card-text blog__desc" th:text = "${blog.intro}">
-                        </p>
+    <div layout:fragment="content" class="container">
+        <div class="row">
+            <div class="job__title">
+                <div class="job__title__name">
+                    Blog
+                </div>
+                <div class="job__title_nav">
+                    <div class="job__title__nav__item first">
+                        <a href="/">
+                            Home
+                        </a>
                     </div>
-                    <a class="btn btn-outline-primary" th:href="@{/blog/detail/{id}(id=${blog.id})}">Đọc thêm</a>
+                    <div class="job__title__nav__item">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="job__title__nav__item last">
+                        Blog
+                    </div>
                 </div>
             </div>
         </div>
-        <!--Paging-->
-        <div class="row paging__cotent">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center" >
-                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
-                        <a class="page-link" th:href="@{'/blog/list/' + ${i}}">[[${i}]]</a>
-                    </li>
-                </ul>
-            </nav>
+        <div class="row" style="margin: 30px 0;">
+            <div class="col-lg-4 col-md-6 col-sm-12" style="padding:20px;" th:each="blog : ${listBlog}">
+                <div class="blog__item">
+                    <div class="blog__item__img">
+                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}">
+                            <img th:src="@{${blog.image}}" alt="blog-image">
+                        </a>
+                    </div>
+                    <div class="blog__item__text">
+                        <div class="blog__item__text__date">
+                                <span th:text = "${blog.datepost}">
+                                </span>
+                            <span>by</span>
+                            <span>Admin</span>
+                        </div>
+                        <div class="blog__item__text__title">
+                            <a th:href="@{/blog/detail/{id}(id=${blog.id})}" th:text = "${blog.title}">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="blog__item__btn">
+                        <div>
+                            Ltech
+                        </div>
+                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="product__paging">
+                <div class="product__paging__item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <a th:href="@{'/blog/list/' + ${i}}">[[${i}]]</a>
+                </div>
+            </div>
         </div>
     </div>
     <th:block th:replace="layout :: footer"></th:block>

@@ -80,16 +80,24 @@ public class CartService {
     private BookService bookService;
 
     @Transactional
-    public void orderCart(User user) {
+    public void orderCart(User user, String image, String content, boolean isPaid) {
         // Create a new Order
         Orders order = new Orders();
         order.setOrder_date(new Date());
-        order.setIsPaid(false);
+
+
+        //Set bool payment
+        order.setIsPaid(isPaid);
+
         order.setUser(user);
         order.setTotalAmount(calcTotalMoney());
 
         //Type order
         order.setType(new Type((long)1));
+
+        //Set image payment and content
+        order.setImage(image);
+        order.setContent(content);
 
         // Iterate over cart items and create OrderDetails
         List<OrdersDetail> listOrderDetail = new ArrayList<>();

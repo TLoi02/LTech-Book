@@ -30,40 +30,46 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/css/**","/font-awesome-4.7.0/**","/js/**","/images/**","/register","/error",
+                                "/assets/**",
+                                "/dist/**",
+                                "/src/**",
                                 "/home",
                                 "/book/**",
                                 "/blog/**",
                                 "/tuyendung",
                                 "/tuyendung/nopdon",
+                                "/subscribe",
+                                "/forget-password/**",
                                 "/"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/cart/**").hasAnyAuthority("USER")
-                        //.requestMatchers().hasAnyAuthority("ADMIN","USER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(userLogin -> userLogin
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/error")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home")
+                        .logoutSuccessUrl("/")
                         .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll())
-                .rememberMe(rememberMe -> rememberMe
-                        .key("$2a$10$8aZ8AdiUTvsO4avvF9a/Z.KcxBySh4Vl0Dr5LkLjJr7f8xznlP0Xm")
-                        .rememberMeCookieName("loginKeep")
-                        .tokenValiditySeconds(86400) //Remember for 24 hour
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/login-social")
+                        .failureUrl("/error")
+                        .permitAll()
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults())

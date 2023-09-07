@@ -73,13 +73,13 @@ public class JobController {
         String body = "Thông tin ứng tuyển: " +
                 "\nHọ và tên: " + newApply.getName() +
                 ".\nEmail: " + newApply.getEmail() +
-                ".\nĐiện thoại: " + newApply.getPhone() +
+                ".\nThư ngõ: " + newApply.getMessage() +
                 ".\nLink CV: "+newApply.getImage()+".";
         //mail hr
         String mailAddress = "vothuanloi110802@gmail.com";
         //send mail
         mailService.sendNewMail(mailAddress,"Thông báo có nhân viên ứng tuyển", body);
 
-        return "job/success";
+        return "success";
     }
 }

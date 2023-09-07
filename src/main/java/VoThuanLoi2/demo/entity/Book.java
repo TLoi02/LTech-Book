@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -66,6 +67,12 @@ public class Book {
     @NotNull(message = "Vui lòng nhập số lượng sách trong kho")
     private Integer quantity;
 
+    @Column
+    private Date datePost;
+
+    @Column
+    private Integer countSell;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -75,4 +82,12 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<Favorite> favorites = new HashSet<>();
+
+    @Column
+    private Double discountPercentage;
+
+    public Double getPriceSale(){
+        Double discountAmount = (this.price * this.discountPercentage) / 100;
+        return this.price - discountAmount;
+    }
 }

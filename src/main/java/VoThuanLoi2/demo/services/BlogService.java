@@ -16,7 +16,7 @@ public class BlogService {
     private BlogRespository repo;
 
     public Page<Blog> findPage(int pageNumber){
-        Pageable pageable = PageRequest.of(pageNumber - 1,8);
+        Pageable pageable = PageRequest.of(pageNumber - 1,6);
         return repo.findAll(pageable);
     }
     public Blog getBlogById(Long id){

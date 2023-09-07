@@ -44,4 +44,18 @@ public class UserService {
     public List<User> getUsersByRoleId(Integer roleId) {
         return userRepository.findByRoleId(roleId);
     }
+
+    public boolean isFull(Integer id){
+        User user = userRepository.getUserByID(id);
+        if (user.getAddress() == null ||
+            user.getName() == null ||
+                user.getPhone() == null ||
+                user.getCity() == null ||
+                user.getDistrict() == null ||
+                user.getWard() == null
+        )
+            return false;
+        else
+            return true;
+    }
 }

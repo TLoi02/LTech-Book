@@ -6,74 +6,132 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Store</title>
-    <link rel="icon" th:href="@{/images/logo.png}" type="image/png">
+    <link th:fragment="link-css" rel="shortcut icon" th:href="@{/static/images/logo.png}" type="image/x-icon" />
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/swiper-bundle.min.css}">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<header th:fragment="header">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/home">
-                <img src="/images/logo.png" style="width: 50px; height: 50px;" alt="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse header__nav" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/home">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/book/list">Sách</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog/list">Tin tức</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tuyendung">Tuyển dụng</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <form th:action="@{/book/search}" method="post" class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Bạn cần tìm gì?" aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Tìm kiếm</button>
-                    </form>
-                    <li class="nav-item" style="display: flex;" sec:authorize="!isAuthenticated()">
-                        <a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link">Đăng nhập</a>
-                        <a sec:authorize="isAnonymous()" th:href="@{/register}" class="nav-link">Đăng ký</a>
-                    </li>
-                    <!--Avatar active when login successs-->
-                    <li class="nav-item" style="display: flex;" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" href="/account"  sec:authorize="hasAuthority('USER')">Tài khoản</a>
-                        <a class="btn btn-success" style="margin-left: 20px;" href="/admin/dashboard" sec:authorize="hasAuthority('ADMIN')">Trang quản trị</a>
-                        <a class="nav-link" th:href="@{/logout}">Đăng xuất</a>
-                        <a class="nav-link" href="/cart" sec:authorize="hasAuthority('USER')">Giỏ hàng</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</header>
-<div th:insert="~{::${content}}">
+    <header th:fragment="header" style="background-color: #F8F9FA;">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/home">
+                    <img src="/images/logo.png" style="width: 50px; height: 50px;" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse header__nav" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/book/list">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/list">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/tuyendung">Career</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <form th:action="@{/book/search}" method="post" class="form-inline my-2 my-lg-0" style="display: flex; align-items: center;">
+                            <input class="form-control mr-sm-2" name="keyword" required type="search" placeholder="Search content..." aria-label="Search">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin-left: 10px;">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                        <li class="nav-item" style="display: flex;" sec:authorize="!isAuthenticated()" >
+                            <a sec:authorize="isAnonymous()" th:href="@{/login}" title="Login" class="btn btn-outline-success my-2 my-sm-0" style="margin-left: 10px;">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                        </li>
 
-</div>
-<footer class="py-3 my-4" th:fragment="footer">
-    <div class="container">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="/home" class="nav-link px-2 text-muted">Trang chủ</a></li>
-            <li class="nav-item"><a href="/blog/list" class="nav-link px-2 text-muted">Tin tức</a></li>
-            <li class="nav-item"><a href="/tuyendung" class="nav-link px-2 text-muted">Tuyển dụng</a></li>
-        </ul>
-        <p class="text-center text-muted">© 2023 Coding by VoThuanLoi</p>
+                        <!--Avatar active when login successs-->
+                        <li class="nav-item" style="display: flex;" sec:authorize="isAuthenticated()">
+                            <a class="btn btn-success" href="/account" style="margin: 0 10px;" title="Account" sec:authorize="hasAuthority('USER')">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-success" style="margin: 0 10px;" href="/admin/dashboard" sec:authorize="hasAuthority('ADMIN')">Dashboard</a>
+                            <a class="btn btn-outline-success my-2 my-sm-0" href="/cart" style="margin-right: 10px;"  title="Cart" sec:authorize="hasAuthority('USER')">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </a>
+                            <a class="btn btn-danger" th:href="@{/logout}"  title="Logout">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div th:insert="~{::${content}}">
+
     </div>
-    <script th:src="@{/js/jquery-3.3.1.slim.min}"></script>
-    <script th:src="@{/js/popper.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/swiper-bundle.min.js}"></script>
-    <script th:src="@{/js/main.js}"></script>
-</footer>
+    <footer th:fragment="footer">
+        <div class="container">
+            <div class="row" style="padding: 20px 0;">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer__info">
+                        <div class="footer__info__title">
+                            Contact info
+                        </div>
+                        <div class="footer__info__item">
+                            448 Phan Huy Ich, Go Vap, HCM
+                        </div>
+                        <div class="footer__info__item">
+                            Monday – Friday: 9:00-20:00
+                            <br>
+                            Saturday: 11:00 – 15:00
+                        </div>
+                        <div class="footer__info__item" style="font-weight: 450;">
+                            Vothuanloi110802@gmail.com
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer__info footer__about">
+                        <div class="footer__info__title">
+                            About Us
+                        </div>
+                        <div class="footer__info__item" style="font-size: 14px; margin-bottom: -10px;">
+                            Got Questions ? Call us 24/7!
+                        </div>
+                        <div class="footer__info__item" style="font-size: 30px; font-weight: 600; color: #CF3424;">
+                            0879-345-387
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer__info">
+                        <div class="footer__info__title">
+                            Pages
+                        </div>
+                        <div class="footer__info__item">
+                            <a href="/book/list">Product</a>
+                        </div>
+                        <div class="footer__info__item">
+                            <a href="/blog/list">Blog</a>
+                        </div>
+                        <div class="footer__info__item">
+                            <a href="/tuyendung">Career</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <span>Coding by </span>
+            <span class="footer__copyright__link">
+                    <a href="#">Vo Thuan Loi</a>
+                </span>
+        </div>
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/js/swiper-bundle.min.js}"></script>
+        <script th:src="@{/js/main.js}"></script>
+    </footer>
 </body>
 </html>

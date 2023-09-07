@@ -14,7 +14,7 @@ public class CategoryService {
     @Autowired
     private ICategoryRespository repo;
     public List<Category> getAllCategories(){
-        return (List<Category>) repo.findAll();
+        return repo.findAll();
     }
     public void deleteCategory(Long id){
         repo.deleteById(id);
@@ -24,10 +24,5 @@ public class CategoryService {
     }
     public Category saveCategory(Category c) {
         return repo.save(c);
-    }
-    public List<Category> getListWithLimit(int limit) {
-        List<Category> allCategories = repo.findAll();
-        int endIndex = Math.min(allCategories.size(), limit);
-        return allCategories.subList(0, endIndex);
     }
 }

@@ -23,7 +23,15 @@ public class User {
     @Column
     private String phone;
     @Column
+    private String city;
+    @Column
+    private String district;
+    @Column
+    private String ward;
+    @Column
     private String address;
+    @Column
+    private String otp;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "UserRole",

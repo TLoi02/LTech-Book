@@ -15,4 +15,8 @@ public class TypeService {
     public List<Type> getAll(){
         return repo.findAll();
     }
+
+    public Type getByID(Long id){
+        return repo.findById(id).orElse(null);
+    }
 }
