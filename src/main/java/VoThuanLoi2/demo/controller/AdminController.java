@@ -186,11 +186,12 @@ public class AdminController {
         book.setYear(updatedBook.getYear());
         book.setCompany(updatedBook.getCompany());
         book.setSize(updatedBook.getSize());
-        book.setType(updatedBook.getType());
-        book.setPages(updatedBook.getPages());
         book.setQuantity(updatedBook.getQuantity());
         book.setCategory(updatedBook.getCategory());
         book.setDatePost(new Date());
+        book.setPages(100);
+        book.setType("CJ Group");
+        book.setCalo(updatedBook.getCalo());
 
         bookService.updateBook(book);
         return "redirect:/admin/product";

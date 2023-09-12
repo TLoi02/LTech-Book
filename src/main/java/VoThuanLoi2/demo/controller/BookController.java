@@ -70,7 +70,7 @@ public class BookController {
             //Get All book
             page = bookService.findPage(currentPage);
 
-            model.addAttribute("titlePage","Tất cả sách");
+            model.addAttribute("titlePage","All Product");
             model.addAttribute("typePaging","all");
         }
         else{
@@ -108,7 +108,7 @@ public class BookController {
         Page<Book> page = bookService.findPage(currentPage);
         int totalPages = page.getTotalPages();
 
-        model.addAttribute("titlePage","Tất cả sách");
+        model.addAttribute("titlePage","All Product");
         model.addAttribute("typePaging","all");
 
         model.addAttribute("totalPages", totalPages);

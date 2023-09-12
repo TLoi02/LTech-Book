@@ -104,6 +104,17 @@ public class BookService {
         repo.save(findBook);
     }
 
+    public void countSellHandel(Long id, int quantity){
+        Book findBook = repo.findById(id).orElse(null);
+        if (findBook != null){
+            Integer getCountSell = findBook.getCountSell();
+            Integer handelCountSell = (getCountSell == null) ? 0 : getCountSell;
+            Integer handel = handelCountSell + (Integer) quantity;
+            findBook.setCountSell(handel);
+        }
+        repo.save(findBook);
+    }
+
     public String getTitleBookWithId(Long id){
         return getBookById(id).getTitle();
     }
@@ -148,5 +159,9 @@ public class BookService {
             book.setDiscountPercentage(value);
             repo.save(book);
         }
+    }
+
+    public List<Book> getListCalo(Integer value){
+        return repo.findBookWithCalo(value);
     }
 }

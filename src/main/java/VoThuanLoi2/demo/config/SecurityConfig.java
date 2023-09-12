@@ -46,9 +46,11 @@ public class SecurityConfig {
                                 "/tuyendung/nopdon",
                                 "/subscribe",
                                 "/forget-password/**",
-                                "/"
+                                "/",
+                                "/join-partner", "/login-partner", "/dashboard-partner/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/appointment/dashboard").hasAnyAuthority("DOCTOR")
                         .requestMatchers("/cart/**").hasAnyAuthority("USER")
                         .anyRequest().authenticated()
                 )

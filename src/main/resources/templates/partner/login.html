@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div layout:fragment="content" class="container">
+  <div class="row">
+    <div class="job__title">
+      <div class="job__title__name">
+        Gym Dashboard
+      </div>
+      <div class="job__title_nav">
+        <div class="job__title__nav__item first">
+          <a href="/">
+            Home
+          </a>
+        </div>
+        <div class="job__title__nav__item">
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </div>
+        <div class="job__title__nav__item last">
+          Gym Dashboard
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <form th:action="@{/login-partner}" method="post" class="join-login__form">
+      <input type="text" name="keyword" required placeholder="*Your key" autofocus>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

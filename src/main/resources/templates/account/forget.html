@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Forget Password</title>
+    <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+    <th:block th:replace="layout :: header"></th:block>
+    <div class="container">
+        <div class="row">
+            <div class="job__title">
+                <div class="job__title__name">
+                    Forget Password
+                </div>
+                <div class="job__title_nav">
+                    <div class="job__title__nav__item first">
+                        <a href="/login">
+                            Login
+                        </a>
+                    </div>
+                    <div class="job__title__nav__item">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="job__title__nav__item last">
+                        Forget Password
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 20px 0;">
+            <form th:action="@{/forget-password/form}" method="post" class="forget__form">
+                <input type="email" autofocus required name="email">
+                <button type="submit">Forget</button>
+            </form>
+        </div>
+    </div>
+    <th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

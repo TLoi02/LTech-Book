@@ -55,6 +55,10 @@ public class Book {
     @NotNull(message = "Vui lòng nhập kích thước")
     private String size;
 
+    @Column(name = "quantity")
+    @NotNull(message = "Vui lòng nhập số lượng sách trong kho")
+    private Integer quantity;
+
     @Column(name = "type")
     @NotNull(message = "Vui lòng nhập loại bìa")
     private String type;
@@ -63,15 +67,14 @@ public class Book {
     @NotNull(message = "Vui lòng nhập số trang")
     private Integer pages;
 
-    @Column(name = "quantity")
-    @NotNull(message = "Vui lòng nhập số lượng sách trong kho")
-    private Integer quantity;
-
     @Column
     private Date datePost;
 
     @Column
     private Integer countSell;
+
+    @Column
+    private Integer calo;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

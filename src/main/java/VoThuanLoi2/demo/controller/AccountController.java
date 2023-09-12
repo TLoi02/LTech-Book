@@ -19,8 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class AccountController {
@@ -38,9 +40,18 @@ public class AccountController {
     private  TypeService typeService;
     @Autowired
     private FogetPasswordService fogetPasswordService;
+    @Autowired
+    private AppointmentService appointmentService;
+    @Autowired
+    private AttendanceService attendanceService;
+    @Autowired
+    private MailService mailService;
 
     //Handel forgetPassWord
     private static String emailForgetPassword = null;
+    //Handel fake cgv ticket
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 
     @GetMapping("/error")
     public String index(){
@@ -62,6 +73,21 @@ public class AccountController {
         response.addCookie(cookie);
 
         return "redirect:/home";
+    }
+
+    @PostMapping("/register")
+    public String handelRegister(@ModelAttribute("user") User user) throws ParseException {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        //Add point to user in first login
+        user.addAttendancePoints(2);
+
+        //set default when register account is user
+        userService.addUserWithRole(user,"user");
+
+        return "redirect:/login";
     }
 
     //Function get user login
@@ -95,6 +121,10 @@ public class AccountController {
         List<Orders> getListOrder = orderService.getOrdersByUserName(user.getUsername());
         int countOrder = (getListOrder != null) ? getListOrder.size() : 0;
         model.addAttribute("countOrder", countOrder);
+
+        List<Appointment> getListAppointment = appointmentService.findListWithUserId(Long.valueOf(user.getUser_id()));
+        int countAppointment = (getListAppointment != null) ? getListAppointment.size() : 0;
+        model.addAttribute("countAppointment", countAppointment);
 
         model.addAttribute("isFull", userService.isFull(user.getUser_id()));
 
@@ -265,5 +295,67 @@ public class AccountController {
         model.addAttribute("pageType","user");
 
         return "invoice";
+    }
+
+
+    @GetMapping("/account/reward")
+    public String handelReward(Model model, Authentication authentication){
+        model.addAttribute("listTopSale", bookService.getListTopSale(4));
+        model.addAttribute("user",getUSer(authentication));
+
+        return "account/reward";
+    }
+
+    @GetMapping("/account/reward/check-in")
+    public String handelCheckin(Authentication authentication) throws ParseException {
+        User getUserLogin = getUSer(authentication);
+        getUserLogin.addAttendancePoints(2);
+        userService.saveUser(getUserLogin);
+
+        return "redirect:/account/reward";
+    }
+
+    public static String generateRandomKey() {
+        Random random = new Random();
+        StringBuilder keyBuilder = new StringBuilder(10);
+
+        for (int i = 0; i < 10; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(randomIndex);
+            keyBuilder.append(randomChar);
+        }
+
+        return keyBuilder.toString();
+    }
+
+    @GetMapping("/account/reward/cgv")
+    public String handelCGV(Authentication authentication, Model model){
+        User getUserLogin = getUSer(authentication);
+        Integer getTotalPoints = getUserLogin.getTotalPoints();
+
+        if (getTotalPoints >= 62){
+            List<Attendance> getListAttendance = attendanceService.getListWithUserID(getUserLogin.getUser_id());
+
+            for (Attendance attendance : getListAttendance) {
+                attendanceService.deleteByID(attendance.getId());
+            }
+
+            Integer handelScore = getTotalPoints - 60;
+            getUserLogin.setPointsCGV(handelScore);
+            userService.saveUser(getUserLogin);
+
+            //Handel notify to mail
+            String body = "Your movie ticket information: " +
+                    "\nKey: " + generateRandomKey()+
+                    ".\nCGV movie box office website nationwide: https://www.cgv.vn/default/cinox/site/.";
+            //mail
+            String mailAddress = getUserLogin.getEmail();
+            //send mail
+            mailService.sendNewMail(mailAddress,"Ticket exchange successful", body);
+
+            return "success";
+        }
+
+        return "error";
     }
 }

@@ -1739,6 +1739,508 @@ footer{
 }
 
 
+/*Partner*/
+.job__partner{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid grey;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+.job__partner__text{
+    color: #CF3424;
+    font-size: 24px;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+.job__partner__btn a,
+.join-login__form button{
+    padding: 5px 40px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    font-weight: 650;
+    text-decoration: none;
+    color:#CF3424;
+    transition: all .3s ease-in;
+}
+.job__partner__btn a:hover,
+.join-login__form button:hover{
+    color: white;
+    background-color: #CF3424;
+}
+.join-login__form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+    height: 400px;
+}
+.join-login__form input{
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: 1px solid grey;
+    min-width: 300px;
+    margin-bottom: 10px;
+}
+.join-content{
+    margin: 20px 0;
+}
+.join-content__btn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.join-content__btn__item{
+    padding: 3px 30px;
+    border: 1px solid #CF3424;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 20px;
+    color:#CF3424;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+.join-content__child{
+
+}
+
+
+/*BMI page*/
+.bmi__form__wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bmi__form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 50px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.bmi__form input,
+.bmi__form select{
+    padding: 7px 40px;
+    margin-bottom: 15px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.bmi__form button{
+    background-color: white;
+    padding: 4px 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    font-weight: 650;
+    color:#CF3424;
+    transition: all .3s ease-in;
+}
+.bmi__form button:hover{
+    background-color: #CF3424;
+    color: white;
+}
+.bmi-result__content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.bmi-result__content__value{
+    font-size: 40px;
+    font-weight: 650;
+}
+.bmi-result__content__type{
+    margin: 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+.bmi-result__content__btn{
+    margin: 10px 0;
+}
+.bmi-result__content__btn a{
+    background-color: white;
+    padding: 4px 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    font-weight: 650;
+    color:#CF3424;
+    transition: all .3s ease-in;
+    text-decoration: none;
+    margin: 0 10px;
+}
+.bmi-result__content__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+
+
+/*Doctor page*/
+.doctor__form-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.doctor__form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 50px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.doctor__form input{
+    padding: 5px 30px;
+    border-radius: 20px;
+    border: 1.5px solid #CF3424;
+    margin-bottom: 10px;
+}
+.doctor__form button{
+    background-color: white;
+    padding: 4px 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    font-weight: 650;
+    color:#CF3424;
+    transition: all .3s ease-in;
+}
+.doctor__form button:hover{
+    color: white;
+    background-color: #CF3424;
+}
+
+
+/*Menu page*/
+.menu__item__content{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+}
+.menu__item__content__title{
+    display: flex;
+    justify-content: center;
+}
+.menu__item__content__title span{
+    padding: 5px 30px;
+    background-color: #CF3424;
+    border-radius: 20px;
+    color: white;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+.menu__item__content__list{
+    font-weight: 600;
+}
+.menu__title-product{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 10px 0;
+}
+.menu__title-product span{
+    padding: 5px 30px;
+    background-color: #CF3424;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+}
+.menu__btn{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+.menu__btn a{
+    padding: 5px 40px;
+    border: 1.5px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    font-weight: 650;
+    border-radius: 20px;
+    transition: all .3s ease-in;
+}
+.menu__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+.menu__item__content__img{
+    margin-bottom: 20px;
+}
+.menu__item__content__img img{
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+}
+.workout__room{
+    padding: 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.workout__room__img img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+.workout__room__btn a{
+    padding: 5px 40px;
+    border: 1.5px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    font-weight: 650;
+    border-radius: 20px;
+    transition: all .3s ease-in;
+}
+.workout__room__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+
+
+/*Doctor page*/
+.doctor__form-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.doctor__form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 50px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.doctor__form input{
+    padding: 5px 30px;
+    border-radius: 20px;
+    border: 1.5px solid #CF3424;
+    margin-bottom: 10px;
+}
+.doctor__form button{
+    background-color: white;
+    padding: 4px 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    font-weight: 650;
+    color:#CF3424;
+    transition: all .3s ease-in;
+}
+.doctor__form button:hover{
+    color: white;
+    background-color: #CF3424;
+}
+
+
+/*Menu page*/
+.menu__item__content{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+}
+.menu__item__content__title{
+    display: flex;
+    justify-content: center;
+}
+.menu__item__content__title span{
+    padding: 5px 30px;
+    background-color: #CF3424;
+    border-radius: 20px;
+    color: white;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+.menu__item__content__list{
+    font-weight: 600;
+}
+.menu__title-product{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 10px 0;
+}
+.menu__title-product span{
+    padding: 5px 30px;
+    background-color: #CF3424;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+}
+.menu__btn{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+.menu__btn a{
+    padding: 5px 40px;
+    border: 1.5px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    font-weight: 650;
+    border-radius: 20px;
+    transition: all .3s ease-in;
+}
+.menu__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+
+.workout__room__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+
+/*Gif page*/
+.attendance__form,
+.attendance__account{
+    padding: 20px;
+    height: 100%;
+    border: 1.5px solid #CF3424;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.attendance__form__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.attendance__form__content__btn a{
+    padding: 5px 40px;
+    border: 1.5px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    font-weight: 650;
+    border-radius: 20px;
+    transition: all .3s ease-in;
+}
+.attendance__form__content__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+.attendance__form__content__text{
+    padding: 5px 20px;
+    background-color: #66a95c;
+    color: white;
+    font-weight: 600;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+.attendance__account__avt img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.attendance__account__content{
+    font-size: 18px;
+    text-align: center;
+}
+.attendance__account__content__item{
+
+}
+.reward{
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #A1C794;
+}
+.reward__content{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.reward__content__title{
+    font-size: 20px;
+    font-weight: 650;
+}
+.reward__content__desc{
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 0;
+}
+.reward__content__required{
+    font-weight: 620;
+    color:#CF3424;
+    margin-bottom: 10px;
+}
+.reward__content__btn a{
+    padding: 5px 40px;
+    border: 1.5px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    font-weight: 650;
+    border-radius: 20px;
+    transition: all .3s ease-in;
+}
+.reward__content__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+.reward__img{
+    padding: 20px;
+}
+.reward__img img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.account__member{
+    height: 100%;
+    background-color:#6ca464;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+.account__member__title{
+    font-size: 40px;
+    font-weight: 650;
+}
+.account__member__score{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.account__member__btn a{
+    padding: 5px 40px;
+    border: 2px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    font-weight: 650;
+    border-radius: 20px;
+    transition: all .3s ease-in;
+    background-color: rgb(228, 221, 221);
+}
+.account__member__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+
+
+
 /*Responsive navbar*/
 @media (min-width: 992px) {
     .header__nav{

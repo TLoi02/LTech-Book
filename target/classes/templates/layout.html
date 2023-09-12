@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Store</title>
-    <link th:fragment="link-css" rel="shortcut icon" th:href="@{/static/images/logo.png}" type="image/x-icon" />
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/swiper-bundle.min.css}">
@@ -55,6 +54,7 @@
                             <a class="btn btn-success" href="/account" style="margin: 0 10px;" title="Account" sec:authorize="hasAuthority('USER')">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
+                            <a class="btn btn-success" style="margin: 0 10px;" href="/appointment/dashboard" sec:authorize="hasAuthority('DOCTOR')">Appointment</a>
                             <a class="btn btn-success" style="margin: 0 10px;" href="/admin/dashboard" sec:authorize="hasAuthority('ADMIN')">Dashboard</a>
                             <a class="btn btn-outline-success my-2 my-sm-0" href="/cart" style="margin-right: 10px;"  title="Cart" sec:authorize="hasAuthority('USER')">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>

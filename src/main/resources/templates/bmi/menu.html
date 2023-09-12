@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+    <th:block th:replace="layout :: header"></th:block>
+    <div class="container">
+        <div class="row">
+            <div class="job__title">
+                <div class="job__title__name">
+                    Menu
+                </div>
+                <div class="job__title_nav">
+                    <div class="job__title__nav__item first">
+                        <a href="/">
+                            Home
+                        </a>
+                    </div>
+                    <div class="job__title__nav__item">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="job__title__nav__item last">
+                        Menu
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 20px 0;">
+            <div class="menu__tab">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start">
+                                <div class="nav flex-column nav-pills me-3" role="tablist" aria-orientation="vertical">
+                                    <a class="nav-link active" data-bs-toggle="pill" href="#monday" role="tab" aria-selected="true">Monday</a>
+                                    <a class="nav-link" data-bs-toggle="pill" href="#tuesday" role="tab" aria-selected="false">Tuesday</a>
+                                    <a class="nav-link" data-bs-toggle="pill" href="#wednesday" role="tab" aria-selected="false">Wednesday</a>
+                                    <a class="nav-link" data-bs-toggle="pill" href="#thursday" role="tab" aria-selected="false">Thursday</a>
+                                    <a class="nav-link" data-bs-toggle="pill" href="#friday" role="tab" aria-selected="false">Friday</a>
+                                    <a class="nav-link" data-bs-toggle="pill" href="#saturday" role="tab" aria-selected="false">Saturday</a>
+                                    <a class="nav-link" data-bs-toggle="pill" href="#sunday" role="tab" aria-selected="false">Sunday</a>
+                                </div>
+                                <div class="tab-content flex-grow-1" id="v-pills-tabContent">
+                                    <div class="tab-pane fade show active " id="monday" role="tabpanel" aria-labelledby="v-pills-user-tab">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Cháo yến mạch với hạt lanh và quả mâm xôi.</li>
+                                                                <li>Nước cam tươi.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Salad gà với rau xanh, cà chua, hành tây và hạt vừng.</li>
+                                                                <li>Bánh mì lúa mạch.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Sườn nướng với sốt hành và tỏi.</li>
+                                                                <li>Bắp nướng.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tuesday" role="tabpanel">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bánh mì mỳ nguyên hạt với hạt óc chó và bơ hạt lanh.</li>
+                                                                <li>Lựu.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Cơm nâu với cá hồi nướng và rau xanh hấp.</li>
+                                                                <li>Nước chanh.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Mì ăn liền chay với rau cải xào.</li>
+                                                                <li>Trái cây tươi.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="wednesday" role="tabpanel">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bát súp lúa mạch với hạt óc chó, hạt lanh và trái cây.</li>
+                                                                <li>Nước ép táo.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Sandwich hấp với thịt bò xông khói, hành tây, rau sống và sốt mù tạt.</li>
+                                                                <li>Bắp nướng.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Gà nướng với sốt tiêu xanh.</li>
+                                                                <li>Khoai tây nướng.</li>
+                                                                <li>Cải xanh hấp.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="thursday" role="tabpanel">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bát súp lúa mạch với dứa và hạt hạnh nhân.</li>
+                                                                <li>Nước chanh và mật ong.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bánh mì sandwich dinh dưỡng với thịt gà, rau sống, và sốt hành tây.</li>
+                                                                <li>Súp hành.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Cá hồi nướng với sốt chanh và dill.</li>
+                                                                <li>Khoai tây nướng.</li>
+                                                                <li>Broccoli hấp.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="friday" role="tabpanel">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bát cháo gạo lứt với trái cây tươi và hạt hạnh nhân.</li>
+                                                                <li>Nước dứa tự nhiên.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bún gạo gói lá bánh tráng với thịt bò nướng và rau sống.</li>
+                                                                <li>Nước chanh.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Sườn non hấp với nấm hương.</li>
+                                                                <li>Cà tím nướng với sốt cà chua.</li>
+                                                                <li>Lá bắp nướng mỡ và tiêu.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="saturday" role="tabpanel">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bánh mì sandwich hạt lanh và hạt óc chó với bơ hạt lanh.</li>
+                                                                <li>Trái cây tươi.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Cơm gạo lứt với gà nướng và bok choy xào.</li>
+                                                                <li>Nước dứa tự nhiên.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bít tết bò với sốt nấm và hành tây.</li>
+                                                                <li>Cà chua nướng.</li>
+                                                                <li>Bún mì xào hải sản.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sunday" role="tabpanel">
+                                        <div class="menu__item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Breakfast
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Bát súp lúa mạch với hạt hạnh nhân và chuối.</li>
+                                                                <li>Nước cam tươi.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Lunch
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Salad hấp với tôm, mực, rau sống và sốt vinaigrette.</li>
+                                                                <li>Bánh mì lúa mạch.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 10px;">
+                                                    <div class="menu__item__content">
+                                                        <div class="menu__item__content__title">
+                                                                <span>
+                                                                    Dinner
+                                                                </span>
+                                                        </div>
+                                                        <div class="menu__item__content__list">
+                                                            <ul>
+                                                                <li>Gà tây nướng với sốt mật ong và nghệ.</li>
+                                                                <li>Cơm lứt.</li>
+                                                                <li>Rau cải ngồng hấp.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu__title-product">
+                    <span>
+                        Good for you
+                    </span>
+            </div>
+            <!--Render product-->
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 20px;" th:each="book:${listProduct}">
+                    <div class="product__content__item">
+                        <div class="product__content__item__img">
+                            <a th:href="@{/book/detail/{id}(id=${book.id})}">
+                                <img th:src="@{${book.image}}" alt="book-image">
+                            </a>
+                        </div>
+                        <div class="product__content__item__title">
+                            <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}">
+                            </a>
+                        </div>
+                        <div class="product__content__item__author">
+                                <span th:text = "${book.author}">
+                                </span>
+                        </div>
+                        <div class="product__content__item__price" th:if="${book.discountPercentage == null}">
+                            <div class="product__content__item__price__main">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span th:text = "${book.price}"></span>
+                            </div>
+                        </div>
+                        <div class="product__content__item__price" th:if="${book.discountPercentage != null}">
+                            <div class="product__content__item__price__main">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span th:text = "${book.getPriceSale()}"></span>
+                            </div>
+                            <div class="product__content__item__price__sale">
+                                <i class="fa fa-usd" aria-hidden="true"></i>
+                                <span th:text = "${book.price}"></span>
+                            </div>
+                        </div>
+                        <div class="product__content__item__btn">
+                            <a th:href="@{/cart/add/{id}(id=${book.id})}">
+                                Add to cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu__btn">
+                <a href="/order/all-bmi">Order All</a>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

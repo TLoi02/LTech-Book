@@ -111,6 +111,7 @@ public class CartService {
 
             //handel quantity book in store
             bookService.orderHandel(cartItem.getId(), cartItem.getQuantity());
+            bookService.countSellHandel(cartItem.getId(), cartItem.getQuantity());
 
             listOrderDetail.add(orderDetail);
         }
