@@ -50,7 +50,7 @@ public class HomeController {
         model.addAttribute("listSeller", bookService.getTopBestSeller(6));
         model.addAttribute("listNewProduct", bookService.getTopNewProduct(3));
         model.addAttribute("listLastedBlog", blogService.getLastedBlog(4));
-        model.addAttribute("sliderList", blogService.getLastedBlog(2));
+        //model.addAttribute("sliderList", blogService.getLastedBlog(2));
         model.addAttribute("listTopSale", bookService.getListTopSale(4));
         model.addAttribute("subscribe", new Subscribe());
 
