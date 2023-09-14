@@ -2240,6 +2240,204 @@ footer{
 }
 
 
+/*Community page*/
+.community__follow__title{
+    font-size: 20px;
+    font-weight: 650;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+}
+.community__follow{
+    padding: 20px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+.community__follow__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid grey;
+    margin: 10px 0;
+}
+.community__follow__item__content{
+    display: flex;
+    align-items: center;
+}
+.community__follow__item__content__avt img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+.community__follow__item__content__name a{
+    color: black;
+    text-decoration: none;
+}
+.community__follow__item__content__name a:hover{
+    color: #CF3424;
+}
+.community__follow__content__btn a{
+    padding: 5px 20px;
+    background-color: #CF3424;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+}
+.community__content__form{
+    padding: 20px;
+    border: 1px solid grey;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    box-shadow: 8px 8px 12px 1px grey;
+}
+.community__content__form textarea{
+    width: 100%;
+    height: 150px;
+    resize: none;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #F0F0F0;
+    color: black;
+}
+.community__content__form label{
+    padding: 5px 20px;
+    background-color: #CF3424;
+    color: white;
+    border-radius: 20px;
+    margin: 10px 0;
+}
+.community__content__form button{
+    padding: 5px 20px;
+    background-color: white;
+    color: #CF3424;
+    border-radius: 20px;
+    border: 1.5px solid #CF3424;
+    font-weight: 650;
+    transition: all .3s ease-in;
+}
+.community__content__form button:hover{
+    color: white;
+    background-color: #CF3424;
+}
+.community__content__item{
+    background-color: white;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid grey;
+}
+.community__content__item__name{
+    display: flex;
+    align-items: center;
+}
+.community__content__item__name__avt img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+.community__content__item__name__content{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+.community__content__item__text{
+    margin: 10px 0;
+}
+.community__content__item__name__content a{
+    color: black;
+    text-decoration: none;
+}
+.community__content__item__name__content a:hover{
+    color:#CF3424;
+}
+.community__content__item__img img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+.community__content__item__btn{
+    margin-top: 10px;
+    font-size: 20px;
+}
+.community__content__item__btn i{
+    margin-left: 20px;
+    cursor: pointer;
+    transition: all .2s ease-in;
+}
+.community__content__item__btn i:hover{
+    color:#CF3424;
+}
+.commnuity__ads__item img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 10px 0;
+}
+.com-page__user{
+    padding: 20px 40px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.com-page__user__info{
+    display: flex;
+    align-items: center;
+}
+.com-page__user__info__avt img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+.com-page__user__info__name{
+    margin-left: 10px;
+}
+.com-page__user__btn a{
+    padding: 5px 20px;
+    background-color: #CF3424;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+}
+.com-page__user__info__name__btn{
+    margin-top: 10px;
+}
+.com-page__user__info__name__btn a{
+    padding: 5px 20px;
+    border: 1.5px solid #CF3424;
+    color: #CF3424;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 650;
+    transition: all .3s ease-in;
+}
+.com-page__user__info__name__btn a:hover{
+    color: white;
+    background-color: #CF3424;
+}
+.menu__item__content__calo{
+    display: flex;
+    justify-content: center;
+}
+.menu__item__content__calo span{
+    background-color:#CF3424;
+    padding: 5px;
+    color: white;
+    font-weight: 600;
+}
+.menu__item__content__list a{
+    color: black;
+    text-decoration: none;
+}
+
+
 
 /*Responsive navbar*/
 @media (min-width: 992px) {
