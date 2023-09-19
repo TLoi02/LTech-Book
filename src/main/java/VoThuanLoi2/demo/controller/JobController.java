@@ -30,7 +30,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/tuyendung")
+@RequestMapping("/career")
 public class JobController {
     @Autowired
     private JobService jobService;
@@ -51,7 +51,7 @@ public class JobController {
         return "job/index";
     }
 
-    @PostMapping("/nopdon")
+    @PostMapping("/apply")
     public String submitForm(@Valid Apply newApply,
                              @RequestParam MultipartFile imageCV,
                              BindingResult result,

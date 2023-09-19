@@ -30,7 +30,4 @@ public interface IBookRespository extends JpaRepository<Book, Long>{
 
     @Query("SELECT b FROM Book b ORDER BY b.discountPercentage DESC LIMIT :value")
     public List<Book> findBookTopSale(@Param("value") Integer value);
-
-    @Query("SELECT b FROM Book b ORDER BY b.calo ASC LIMIT :value")
-    public List<Book> findBookWithCalo(@Param("value") Integer value);
 }

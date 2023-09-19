@@ -42,8 +42,8 @@ public class SecurityConfig {
                                 "/home",
                                 "/book/**",
                                 "/blog/**",
-                                "/tuyendung",
-                                "/tuyendung/nopdon",
+                                "/career",
+                                "/career/apply",
                                 "/subscribe",
                                 "/forget-password/**",
                                 "/"
