@@ -1,5 +1,18 @@
-# Book Store
+# LTech Book Store
 This project use Java Spring Boot to coding. Data in project save to MySQL, when user checkout or post cv have notify to mail admin and other functions. Image in project save in Cloudinary and save URL to database.
+## Special Functions
+1. Sign in with social network.
+2. Reset password using OTP.
+3. Product discount.
+4. Apply discount code.
+5. Online payment with VNPay or scanning QR code.
+6. Integrate GHTK (Giao Hàng Tiết Kiệm) shipping company's API.
+7. Subscribe.
+8. Apply for a job with LTech.
+9. Check-in for points and Redeem points.
+10. Admin creates discounts, generates vouchers, and sends promotional codes to users.
+11. Admin download the candidate's resume (CV) image.
+12. And all the basic features of an e-commerce website.
 ## Installation
 1. Clone this repo to local.
 2. Open MySQL and create database name 'bookstore'.
@@ -14,8 +27,7 @@ This project use Java Spring Boot to coding. Data in project save to MySQL, when
 - Username: vothuanloi.
 - Password: 11082002.
 ## Request
-1. "/login": Login page. If you login account admin, in Homepage have button go to admin dashboard else if your account is user in Homepage have link go to AccountPage.
-2. "/register": Register page. Default when create account is user role.
+"/login": Login page. If you login account admin, in Homepage have button go to admin dashboard else if your account is user in Homepage have link go to AccountPage. You should log in for the best experience !
 ## Demo
 [Watch demo](https://drive.google.com/file/d/1ExxA7iG23QL9eDHN5Tr64veH2yzON6UK/view?usp=sharing)
 ## My other projects
