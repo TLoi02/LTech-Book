@@ -35,18 +35,6 @@ public class User {
     @Column
     private String otp;
 
-    @Column
-    private Double weight;
-    @Column
-    private Double height;
-    @Column
-    private Double bmi;
-
-    @Column
-    private Boolean isMenu;
-    @Column
-    private Boolean isWorkout;
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "UserRole",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),

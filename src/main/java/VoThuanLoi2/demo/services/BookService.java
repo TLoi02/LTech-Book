@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -33,7 +34,6 @@ public class BookService {
     public List<Book> getListBookWitdIdCategory(Long id){
         return repo.findByCategoryId(id);
     }
-
 
     public Page<Book> findPage(int pageNumber){
         Pageable pageable = PageRequest.of(pageNumber - 1,8);
@@ -159,9 +159,5 @@ public class BookService {
             book.setDiscountPercentage(value);
             repo.save(book);
         }
-    }
-
-    public List<Book> getListCalo(Integer value){
-        return repo.findBookWithCalo(value);
     }
 }

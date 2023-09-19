@@ -41,8 +41,6 @@ public class AccountController {
     @Autowired
     private FogetPasswordService fogetPasswordService;
     @Autowired
-    private AppointmentService appointmentService;
-    @Autowired
     private AttendanceService attendanceService;
     @Autowired
     private MailService mailService;
@@ -121,10 +119,6 @@ public class AccountController {
         List<Orders> getListOrder = orderService.getOrdersByUserName(user.getUsername());
         int countOrder = (getListOrder != null) ? getListOrder.size() : 0;
         model.addAttribute("countOrder", countOrder);
-
-        List<Appointment> getListAppointment = appointmentService.findListWithUserId(Long.valueOf(user.getUser_id()));
-        int countAppointment = (getListAppointment != null) ? getListAppointment.size() : 0;
-        model.addAttribute("countAppointment", countAppointment);
 
         model.addAttribute("isFull", userService.isFull(user.getUser_id()));
 

@@ -54,12 +54,6 @@
                 <span style="font-weight: 600;" th:text = "${user.address}"></span>
                 <span>.</span>
               </div>
-              <div class="account__user__info__item" th:if="${user.bmi != null}">
-                <span>BMI:</span>
-                <span style="font-weight: 600;" th:text = "${user.bmi}"></span>
-                <a href="/calc-bmi" style="margin-left: 10px;">Update</a>
-                <span>.</span>
-              </div>
             </div>
           </div>
         </div>
@@ -71,11 +65,6 @@
             <div class="account__member__score">
               <span>Score: </span>
               <span style="font-weight: 600;" th:text = "${user.getTotalPoints()}"></span>
-              <span>.</span>
-            </div>
-            <div class="account__member__score" style="margin-top: -10px;">
-              <span>Follower: </span>
-              <span style="font-weight: 600;">10</span>
               <span>.</span>
             </div>
             <div class="account__member__btn">
@@ -92,82 +81,6 @@
           </div>
           <div class="account__update__link">
             <a href="/account/update">Update</a>
-          </div>
-        </div>
-      </div>
-      <!--Layout calc BMI-->
-      <div class="row" th:if="${user.getBmi() == null}" style="margin-top: 20px;">
-        <div class="account__update" style="background-color: #9fbed9;">
-          <div class="account__upadta__desc">
-            Calculate your BMI to experience all our benefits for free
-          </div>
-          <div class="account__update__link">
-            <a href="/calc-bmi">Calculator BMI</a>
-          </div>
-        </div>
-      </div>
-      <!--Layout render benefit-->
-      <div class="row" style="margin: 20px 0;">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="account__box" style="background-color: #b9c4ce;">
-            <div class="account__box__icon">
-              <i class="fa fa-cutlery" aria-hidden="true"></i>
-            </div>
-            <div class="account__box__title">
-              Menu
-            </div>
-            <div class="account__box__value">
-                          <span>
-                              7
-                          </span>
-              <span>
-                              Days
-                          </span>
-            </div>
-            <div class="account__box__btn">
-              <a href="/menu">Detail</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="account__box" style="background-color: #d0d2d9;">
-            <div class="account__box__icon">
-              <i class="fa fa-location-arrow" aria-hidden="true"></i>
-            </div>
-            <div class="account__box__title">
-              Workout
-            </div>
-            <div class="account__box__value">
-                          <span>
-                              7
-                          </span>
-              <span>
-                              Days
-                          </span>
-            </div>
-            <div class="account__box__btn">
-              <a href="/workout">Detail</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="account__box" style="background-color: #9fbed9;">
-            <div class="account__box__icon">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
-            </div>
-            <div class="account__box__title">
-              Appointment
-            </div>
-            <div class="account__box__value">
-                          <span th:text = "${countAppointment}">
-                          </span>
-              <span>
-                              Appointment
-                          </span>
-            </div>
-            <div class="account__box__btn">
-              <a href="/appointment">Detail</a>
-            </div>
           </div>
         </div>
       </div>

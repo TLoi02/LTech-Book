@@ -73,9 +73,6 @@ public class Book {
     @Column
     private Integer countSell;
 
-    @Column
-    private Integer calo;
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
