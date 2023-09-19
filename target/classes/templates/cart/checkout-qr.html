@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment with QRCode</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+  <th:block th:replace="layout :: header"></th:block>
+  <div class="container">
+    <div class="row">
+      <div class="job__title">
+        <div class="job__title__name">
+          Payment
+        </div>
+        <div class="job__title_nav">
+          <div class="job__title__nav__item first">
+            <a href="/cart">
+              Cart
+            </a>
+          </div>
+          <div class="job__title__nav__item">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </div>
+          <div class="job__title__nav__item last">
+            Payment
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin: 30px 0;">
+      <div class="col-lg-6 col-md-6 col-sm-12" style="padding: 0 20px;">
+        <div class="payment__qr">
+          <img th:src="@{${url}}" alt="qr-code">
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" style="padding: 0 20px;">
+        <div class="payment__content">
+          <div class="payment__content__text">
+            <div class="payment__content__text__title">
+              Nội dung chuyển khoảng:
+            </div>
+            <div class="payment__content__text__content">
+              <span th:text = "${time}"></span>
+            </div>
+          </div>
+          <form th:action="@{/cart/checkout/qr-code}" method="post" enctype = "multipart/form-data" class="payment__content__form">
+            <div class="payment__form__group">
+              <input type="hidden" th:value = "${time}" name="content">
+              <label style="font-weight: 600; font-size: 17px;">Ảnh giao dịch thành công</label>
+              <label for="file" class="payment__form__upload">Upload</label>
+              <input placeholder="" name="imageBill" type="file" id="file" accept="image/png, image/jpeg" required>
+            </div>
+            <button type="submit">Check Out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

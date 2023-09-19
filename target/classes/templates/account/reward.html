@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Reward</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+  <th:block th:replace="layout :: header"></th:block>
+  <div class="container">
+    <div class="row">
+      <div class="job__title">
+        <div class="job__title__name">
+          Reward
+        </div>
+        <div class="job__title_nav">
+          <div class="job__title__nav__item first">
+            <a href="/">
+              Home
+            </a>
+          </div>
+          <div class="job__title__nav__item">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </div>
+          <div class="job__title__nav__item last">
+            Reward
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Checkin-->
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12" style="padding: 10px;">
+        <div class="attendance__form">
+          <!--Layout active-->
+          <div class="attendance__form__content" th:if="${user.hasAttendedToday() == false}">
+            <div class="attendance__form__content__btn">
+              <a href="/account/reward/check-in">Check-in</a>
+            </div>
+            <div class="attendance__form__content__text">
+              Check in daily to earn 2 points in your account.
+            </div>
+          </div>
+          <!--Layout disable-->
+          <div class="attendance__form__content" th:if="${user.hasAttendedToday() == true}">
+              <div class="attendance__form__content__text" style="background-color: #CF3424;">
+                  Come back tomorrow to continue checking in.
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" style="padding: 10px">
+        <div class="attendance__account">
+          <div class="attendance__account__avt">
+            <img src="https://www.playtoearn.online/wp-content/uploads/2021/10/Bored-Ape-Yacht-Club-NFT-avatar.png" alt="avt">
+          </div>
+          <div class="attendance__account__content">
+            <div class="attendance__account__content__item">
+                              <span style="font-weight: 600;" th:text = "${user.name}">
+                              </span>
+            </div>
+            <div class="attendance__account__content__item">
+                              <span>
+                                  Score:
+                              </span>
+              <span style="font-weight: 600; color: #CF3424;" th:text = "${user.getTotalPoints()}"></span>
+              <span>.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Redeem-->
+    <div class="reward">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12" style="padding: 10px;">
+          <div class="reward__content">
+            <div class="reward__content__title">
+              Redeem LTech reward points
+            </div>
+            <div class="reward__content__desc">
+              LTech has created an LTech reward points redemption program for free CGV movie ticket codes applicable to all CGV branches.
+              After redeeming the reward, the ticket will be sent to your email.
+            </div>
+            <div class="reward__content__required">
+              (60 point for reward)
+            </div>
+            <div class="reward__content__btn">
+              <a href="/account/reward/cgv">Reward</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12" style="padding: 10px;">
+          <div class="reward__img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/CGV_logo.svg/2560px-CGV_logo.svg.png" alt="cgv-logo">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Render hotdeal-->
+    <div class="row" style="margin: 10px 0;">
+      <div class="product__sale">
+        <div class="product__sale__title">
+          Hot Deals
+        </div>
+        <div class="product__sale__content">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12" th:each="book:${listTopSale}">
+              <div class="product__sale__content__item">
+                <div class="product__sale__content__item__img">
+                  <a th:href="@{/book/detail/{id}(id=${book.id})}">
+                    <img th:src="@{${book.image}}" alt="product-image">
+                  </a>
+                </div>
+                <div class="product__sale__content__item__title">
+                  <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}"></a>
+                  <span th:text = "${book.discountPercentage}"></span>
+                </div>
+                <div class="product__sale__content__item__author">
+                  <span th:text = "${book.author}"></span>
+                </div>
+                <div class="product__sale__content__item__price">
+                  <div class="product__sale__content__item__price__main">
+                    <i class="fa fa-usd" aria-hidden="true"></i>
+                    <span th:text = "${book.getPriceSale()}"></span>
+                  </div>
+                  <div class="product__sale__content__item__price__sale">
+                    <i class="fa fa-usd" aria-hidden="true"></i>
+                    <span th:text = "${book.price}"></span>
+                  </div>
+                </div>
+                <div class="product__sale__content__item__btn">
+                  <a th:href="@{/cart/add/{id}(id=${book.id})}">Add to cart</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

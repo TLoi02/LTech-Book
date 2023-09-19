@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Comments</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+  <th:block th:replace="layout :: header"></th:block>
+  <div class="container">
+    <div class="row">
+      <div class="job__title">
+        <div class="job__title__name">
+          Comments
+        </div>
+        <div class="job__title_nav">
+          <div class="job__title__nav__item first">
+            <a href="/account">
+              Account
+            </a>
+          </div>
+          <div class="job__title__nav__item">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </div>
+          <div class="job__title__nav__item last">
+            Comments
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:if="${listComment.size() != 0}" class="row" style="margin-bottom: 20px;">
+      <div class="col-lg-3 col-md-6 col-sm-12" style="margin-top: 20px;" th:each="book:${listComment}">
+        <div class="product__content__item">
+          <div class="product__content__item__img">
+            <a th:href="@{/book/detail/{id}(id=${book.id})}">
+              <img th:src="@{${book.image}}" alt="book-image">
+            </a>
+          </div>
+          <div class="product__content__item__title">
+            <a th:href="@{/book/detail/{id}(id=${book.id})}" th:text = "${book.title}"></a>
+          </div>
+          <div class="product__content__item__author" >
+            <span th:text = "${book.author}"></span>
+          </div>
+          <div class="product__content__item__price" th:if="${book.discountPercentage == null}">
+            <div class="product__content__item__price__main">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+              <span th:text = "${book.price}"></span>
+            </div>
+          </div>
+          <div class="product__content__item__price" th:if="${book.discountPercentage != null}">
+            <div class="product__content__item__price__main">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+              <span th:text = "${book.getPriceSale()}"></span>
+            </div>
+            <div class="product__content__item__price__sale">
+              <i class="fa fa-usd" aria-hidden="true"></i>
+              <span th:text = "${book.price}"></span>
+            </div>
+          </div>
+          <div class="product__content__item__btn">
+            <a th:href="@{/cart/add/{id}(id=${book.id})}">
+              Add to cart
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:if="${listComment.size() == 0}" class="row">
+        <div class="product__error">
+            <div class="product__error__type">
+                Sorry
+            </div>
+            <div class="product__error__desc">
+                You haven't commented on any product yet!
+            </div>
+            <div class="product__error__btn">
+                <a href="/">Home Page</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

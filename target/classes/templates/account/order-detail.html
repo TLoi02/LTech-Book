@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Detail</title>
+  <th:block th:replace="layout :: link-css"></th:block>
+</head>
+<body>
+  <th:block th:replace="layout :: header"></th:block>
+  <div class="container">
+    <div class="row">
+      <div class="job__title">
+        <div class="job__title__name">
+          Order Detail
+        </div>
+        <div class="job__title_nav">
+          <div class="job__title__nav__item first">
+            <a href="/account/orders">
+              Orders
+            </a>
+          </div>
+          <div class="job__title__nav__item">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </div>
+          <div class="job__title__nav__item last">
+            Order Detail
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 20px;" th:if="${typeID == 1}">
+      <div class="order-detail__btn">
+        <a th:href="@{/order/cancel/{orderId}(orderId=${orderId})}">Hủy đơn hàng</a>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-lg-12 col-md-10 hh-grayBox pt45 pb20">
+        <div class="row justify-content-between">
+          <div th:class="${typeID >= 1} ? 'order-tracking completed' : 'order-tracking'">
+            <span class="is-complete"></span>
+            <p>Đặt hàng</p>
+          </div>
+          <div th:class="${typeID >= 2} ? 'order-tracking completed' : 'order-tracking'">
+            <span class="is-complete"></span>
+            <p th:text = "${typeNameCheck}"></p>
+          </div>
+          <div th:class="${typeID >= 3 && typeID != 5} ? 'order-tracking completed' : 'order-tracking'">
+            <span class="is-complete"></span>
+            <p>Vận chuyển</p>
+          </div>
+          <div th:class="${typeID >= 4 && typeID != 5} ? 'order-tracking completed' : 'order-tracking'">
+            <span class="is-complete"></span>
+            <p>Hoàn thành</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin: 20px 0;;">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total amount</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="book:${listOrderDetail}">
+          <th scope="row" th:text = "${book.id}"></th>
+          <td th:text = "${book.title}"></td>
+          <td th:text = "${book.price}"></td>
+          <td th:text = "${book.quantity}"></td>
+          <td th:text = "${book.getAmount()}"></td>
+          <td>
+            <div class="orders__btn">
+              <a th:href="@{/account/invoice/{orderId}(orderId=${orderId})}">Invoice</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
