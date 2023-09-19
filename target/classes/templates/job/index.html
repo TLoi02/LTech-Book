@@ -3,7 +3,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>Tuyển dụng</title>
+  <title>Career</title>
   <th:block th:replace="layout :: link-css"></th:block>
 </head>
 <body>
@@ -83,7 +83,7 @@
             </div>
           </div>
           <div class="job__apply__form">
-            <form action="" class="job__apply__form__child" th:action="@{/tuyendung/nopdon}" th:object="${apply}" method="post" enctype = "multipart/form-data">
+            <form action="" class="job__apply__form__child" th:action="@{/career/apply}" th:object="${apply}" method="post" enctype = "multipart/form-data">
               <input th:field="*{name}" type="text" required autofocus placeholder="Name *">
               <input th:field="*{email}" type="email" required placeholder="Email *">
               <select name="" th:field="*{job.id}" required>
